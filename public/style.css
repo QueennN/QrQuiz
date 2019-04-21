@@ -1,0 +1,39 @@
+.oyun{
+    height:100%;
+    width:100%;
+    background-color:red;
+    
+}
+.ust{
+    height:8%;
+    width:100%;
+    background-color:green;
+}
+.soru{
+    height:42%;
+    width:100%;
+    background-color:lightpink;
+    text-align: center;
+    vertical-align: middle;
+
+   
+}
+
+.kutu{
+    height:25%;
+    width:100%;
+  
+}
+.cevap{
+    height:50%;
+    width:100%;
+    background-color:white;
+    
+}
+p{
+margin:0 auto 0 auto;
+}
+.cevap:hover{
+    background-color:grey;
+    color:white;
+}

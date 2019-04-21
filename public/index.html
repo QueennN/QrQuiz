@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>QrQuiz -Scan easily, Play easily!</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <link rel="stylesheet" type="text/css" href="/public/style.css">
+        <script>
+        $(function(){
+            var socket = io();
+            $('#1').click(()=>{
+                socket.on('login','umut')
+                socket.emit('cevapla','1')
+            })
+        })
+        </script>
+    </head>
+    <body>
+        <div class="oyun">
+            <div class="ust">ÜST BİLGİ</div>
+            <div class="soru">SORU</div>
+            <div class="kutu">
+                <div class="cevap" id="1"><p>CEVAP1</p></div>
+                <div class="cevap" id="2"><p>CEVAP2</p></div>
+                <div class="cevap" id="3"><p>CEVAP3</p></div>
+                <div class="cevap" id="4"><p>CEVAP4</p></div>
+            </div>
+        </div>
+        
+    </body>
+</html>
