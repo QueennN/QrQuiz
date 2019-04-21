@@ -120,7 +120,7 @@ class Game{
 
 //--------App
 var games=[]
-
+ games['0']=new Game()
  games['1']=new Game()
  games['2']=new Game()
  games['3']=new Game()
@@ -133,9 +133,11 @@ var games=[]
 
 
  io.sockets.on('connection',(socket)=>{
-
     socket.on('oyuncu_ekle',(oyuncu)=>{
-        games[oyuncu.qr].oyuncu_ekle(oyuncu.name,socket.id)
+        if(games[oyuncu.qr]){
+            games[oyuncu.qr].oyuncu_ekle(oyuncu.name,socket.id)
+        }
+        
     })
 
     socket.on('isim_ekle',(oyuncu)=>{
