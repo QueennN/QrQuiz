@@ -223,5 +223,5 @@ app.get('/',(req,res)=>{
 })
 
 http.listen(80, function(){
-    console.log('asd listening on *:80');
+    console.log('DENEME listening on *:80');
   });
