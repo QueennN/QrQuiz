@@ -3,28 +3,214 @@
         <title>QrQuiz -Scan easily, Play easily!</title>
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-        <link rel="stylesheet" type="text/css" href="/public/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta charset="utf-8">
         <script>
         $(function(){
-            var socket = io();
+            var socket = io(); 
+            var time=120
+            var qr='1'
+            var oyuncu={
+                'name':null,
+                'qr':qr
+            }
+            var s_obj={
+                cvp:null,
+                'qr':qr
+            }
+            var change=function(mode){//0 qr , 1 ready , 2 game , 3 sonuclar
+                var items=[]
+                items.push($('.qr'))
+                items.push($('.login'))
+                items.push($('.oyun'))
+                items.push($('.sonuc'))
+
+                for(i in items)
+                {
+                    items[i].hide()
+                }
+                items[mode].show()
+            }
+
+           var s =window.location.href
+            for(x in s){
+               if(s[x]=='='){
+                   x++
+                   qr=s[x]
+               }
+            }
+            //----test---
+            console.log('qr->'+qr)
+            oyuncu.qr=qr
+            s_obj.qr=qr
+            oyuncu.name=''
+            //---test---
+            change(1)//test için 1 normalde 0 olmalı
+            socket.emit('oyuncu_ekle',oyuncu)
+
+            $('.bk').click(()=>{//ready butonu
+                if($('.isim').val()!=""){
+                    oyuncu.name=$('.isim').val()
+                    socket.emit('isim_ekle',oyuncu)
+                    socket.emit('ready',qr)
+                    $('#buton').text='Waiting for others'
+                }
+            })
+
+            socket.on('ready',(durum)=>{
+                time=120
+                if(durum=='basladi'){
+                    change(2)
+                    socket.emit ('soru',s_obj)
+                    setInterval(() => {
+                        if(time==0){
+                            clearInterval(this)
+                        }
+                        else{
+                            time--
+                            $('#zaman').text('Kalan:'+time)
+                        }
+                    }, 1000);
+                }
+                else{
+                    $('#buton').text='Game is started already'
+                }
+            })
+            $(window).bind("beforeunload", function() { 
+                socket.emit('disconnect')
+            });
+            socket.on('soru',(soru)=>{
+                $('.soru').text(soru.soru)
+                $('#1').text(soru.s0)
+                $('#2').text(soru.s1)
+                $('#3').text(soru.s2)
+                $('#4').text(soru.s3)
+                $('#puan').text('Score: '+soru.puan)    
+            })
+            
+
             $('#1').click(()=>{
-                socket.on('login','umut')
-                socket.emit('cevapla','1')
+                s_obj.cvp=0
+                socket.emit('soru',s_obj)
+            })
+            $('#2').click(()=>{ 
+                s_obj.cvp=1
+                socket.emit('soru',s_obj)
+            })
+            $('#3').click(()=>{    
+                s_obj.cvp=2         
+                socket.emit('soru',s_obj)
+            })
+            $('#4').click(()=>{
+                s_obj.cvp=3
+                socket.emit('soru',s_obj)
+            })
+
+            socket.on('bitti',(oyuncular)=>{
+                $('.sonuckutu li').remove()
+                $('.sonuckutu').append('<li class="list-group-item bg-danger text-white">Top 5 Congratulations!</li>')
+                
+                console.log(oyuncular)
+                change(3)
+                var control=0
+
+                for(x in oyuncular){
+                    $('.sonuckutu').append('<li class="list-group-item">'+oyuncular[x].name +' '+oyuncular[x].puan +'</li>')
+                    control++
+                    if(control==4){
+                        control=0
+                        break
+                    }
+                      
+                }   
+                setTimeout(() => {
+                    change(1)
+                },1000*7);
             })
         })
+    
         </script>
+        <style>
+            body {
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+        font-size:30px;
+} 
+            ::-webkit-scrollbar { 
+                 display: none; 
+                }
+        </style>
+        <style>
+            ::-webkit-scrollbar { 
+                 display: none; 
+                }
+                .kutu > li{
+                    
+                    height: 19%;
+                    padding-top:10%;
+                    padding-bottom:10% 
+                }
+        </style>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-    <body>
-        <div class="oyun">
-            <div class="ust">ÜST BİLGİ</div>
-            <div class="soru">SORU</div>
-            <div class="kutu">
-                <div class="cevap" id="1"><p>CEVAP1</p></div>
-                <div class="cevap" id="2"><p>CEVAP2</p></div>
-                <div class="cevap" id="3"><p>CEVAP3</p></div>
-                <div class="cevap" id="4"><p>CEVAP4</p></div>
+    <body style="background-color: #eee; font-size: 34px; padding:0;" class="display-5">
+        <div class="container-fluid">
+            <form>
+                <div class="login row  mb-4" style="height:100%;margin-top:25%">
+                    <div class="col-12 text-center">
+                        <div class="  justify-content-center">
+                            <div class="isimkutu form-group">
+                                <label class="mr-2 form-text" for="name">İsim:</label>
+                                <input class="form-control  mr-2" type="text" id="name">
+                            </div>
+                            <div class="bk">
+                                <div class="btn btn-lg btn-danger" id='#buton' style="width:50%">Ready</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    
+            <div class="oyun">
+                 <div class="row ust">
+                    <div class="col-6 ustkutu" id='puan'></div>
+                    <div class="col-6 ustkutu" id='zaman'></div>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <div class="col-12 text-center">
+                        <div class="list-group">
+                            <ul class="list-group" style="height:100%">
+                                <li class="list-group-item bg-danger text-white">
+                                    <div class="soru" style="padding-top:10%;padding-bottom:10%">SORU</div>
+                                </li>
+                                <div class="kutu">
+                                    <li class="list-group-item cevap" id="1">CEVAP1</li>
+                                    <li class="list-group-item cevap" id="2">CEVAP2</li>
+                                    <li class="list-group-item cevap" id="3">CEVAP3</li>
+                                    <li class="list-group-item cevap" id="4">CEVAP4</li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+    
+            <div class="row justify-content-center mb-4">
+                <div class="col-12 text-center">
+                    <div class="list-group">
+                        <ul class="list-group">
+                            <div class='sonuc'>
+                                <div class="sonuckutu"></div>
+                            </div>
+                        </ul>
+                    </div>
+                </div> 
             </div>
         </div>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -1,13 +1,61 @@
+
+body{
+    margin:0;
+    text-align: center;
+    vertical-align: middle;
+}
+#preview{
+    width:100%;
+    height:70%;
+
+}
+.qrb{
+    background:lightblue;
+    height:10%;
+    font-size:30px;
+    cursor:pointer;
+}
+.login{
+    padding:10% 0 10% 0;
+height:80%;
+width:80%;
+margin:auto;
+
+}
+.isimkutu{
+  
+    width:100%;
+    height: 50%;
+    margin-top:20px
+}
+.isim{
+    font-size:20pt;
+}
+.bk{
+    height:9%;
+    background-color: red;
+
+}
+.bk:hover{
+    cursor:pointer;
+    background-color:blue;
+}
 .oyun{
     height:100%;
     width:100%;
     background-color:red;
-    
+   
 }
 .ust{
     height:8%;
     width:100%;
     background-color:green;
+}
+.ustkutu{
+    float:left;
+    width:33%;
+    font-size:20px;
+    
 }
 .soru{
     height:42%;
@@ -36,4 +84,11 @@ margin:0 auto 0 auto;
 .cevap:hover{
     background-color:grey;
     color:white;
+}
+
+
+
+.sonuckutu{
+    height:16.6%;
+    width:100%;
 }
