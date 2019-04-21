@@ -7,6 +7,19 @@
         <meta charset="utf-8">
         <script>
         $(function(){
+
+            function getParam(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[[]]/g, '\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/+/g, ' '));
+            }
+            
+
+
             var socket = io(); 
             var time=60
             var qr='1'
@@ -32,14 +45,10 @@
                 items[mode].show()
             }
 
-           var s =window.location.href
-            for(x in s){
-               if(s[x]=='='){
-                   x++
-                   qr=s[x]
-               }
-            }
+           
+         
             //----test---
+            qr=getParam('qr')
             console.log('qr->'+qr)
             oyuncu.qr=qr
             s_obj.qr=qr
