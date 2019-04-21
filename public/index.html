@@ -8,7 +8,7 @@
         <script>
         $(function(){
             var socket = io(); 
-            var time=120
+            var time=60
             var qr='1'
             var oyuncu={
                 'name':null,
@@ -58,7 +58,7 @@
             })
 
             socket.on('ready',(durum)=>{
-                time=120
+                time=60
                 if(durum=='basladi'){
                     change(2)
                     socket.emit ('soru',s_obj)
