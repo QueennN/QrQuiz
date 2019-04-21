@@ -220,6 +220,6 @@ app.get('/',(req,res)=>{
     })
 })
 
-http.listen(443, function(){
+http.listen(80, function(){
     console.log('listening on *:80');
   });
