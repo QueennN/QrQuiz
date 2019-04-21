@@ -85,7 +85,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*30);
+            }, 1000*60);
         } 
     }
 
@@ -128,6 +128,8 @@ var games=[]
  games['5']=new Game()
  games['6']=new Game()
  games['7']=new Game()
+ games['8']=new Game()
+ games['9']=new Game()
 
 
  io.sockets.on('connection',(socket)=>{
