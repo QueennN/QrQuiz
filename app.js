@@ -217,9 +217,12 @@ var games=[]
 app.get('/',(req,res)=>{
     console.log("qr bilgisi "+req.query.qr)
     fs.readFile('./public/index.html',(err,data)=>{
-        if(!err){
+        if(!err & req.querystring.qr!=undefined){
             res.writeHead(200)
             res.end(data)    
+        }
+        else{
+            res.end('Qr kodun olmadan giremezsin.')
         }
     })
 })
