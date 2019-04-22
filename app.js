@@ -136,15 +136,17 @@ var games=[]
     socket.on('oyuncu_ekle',(oyuncu)=>{
         if(games[oyuncu.qr]){
             games[oyuncu.qr].oyuncu_ekle(oyuncu.name,socket.id)
+            socket.on('isim_ekle',(oyuncu)=>{
+                console.log(oyuncu)
+                console.log(socket.id)
+                games[oyuncu.qr].isim_ekle(socket.id,oyuncu.name)
+                
+            })
         }
         
     })
 
-    socket.on('isim_ekle',(oyuncu)=>{
-        console.log(oyuncu)
-        console.log(socket.id)
-            games[oyuncu.qr].isim_ekle(socket.id,oyuncu.name)
-    })
+   
 
     socket.on('ready',(qr)=>{
         if(games[qr].basladimi==true){
