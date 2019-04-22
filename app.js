@@ -136,11 +136,53 @@ var games=[]
     socket.on('oyuncu_ekle',(oyuncu)=>{
         if(games[oyuncu.qr]){
             games[oyuncu.qr].oyuncu_ekle(oyuncu.name,socket.id)
+
             socket.on('isim_ekle',(oyuncu)=>{
                 console.log(oyuncu)
                 console.log(socket.id)
                 games[oyuncu.qr].isim_ekle(socket.id,oyuncu.name)
                 
+                socket.on('ready',(qr)=>{
+                    if(games[qr].basladimi==true){
+                        io.sockets.connected[socket.id].emit('ready','Oyun zaten başladı')
+                    }else{
+                        var kontrol=games[qr].ready(socket.id)//true dönerse herkes hazır demek
+                        if(kontrol==true){
+                            for(var x in games[qr].oyuncular){
+                                io.sockets.connected[games[qr].oyuncular[x].id].emit('ready','basladi')//her bir kullanıcı için   
+                                console.log('başladı bilgisi gönderildi-> '+games[qr].oyuncular[x].id)
+                                socket.on('soru',(s_obj)=>{
+                                    if(games[s_obj.qr].basladimi){
+                                        var o=games[s_obj.qr].oyuncular[socket.id]//oyuncu
+                                        if(o.index!=-1 ){
+                                            if(sorular[o.index].cevap==s_obj.cvp){
+                                                games[s_obj.qr].oyuncular[socket.id].puan++
+                                            }
+                                            else{
+                                                games[s_obj.qr].oyuncular[socket.id].puan--
+                                            }
+                                            
+                                        }
+                                        else{
+                                        }
+                                        var rnd=Math.floor(Math.random()*(sorular.length))
+                                        var sObj={
+                                            soru:sorular[rnd].soru,
+                                            s0:sorular[rnd].s0,
+                                            s1:sorular[rnd].s1,
+                                            s2:sorular[rnd].s2,
+                                            s3:sorular[rnd].s3,
+                                            puan:games[s_obj.qr].oyuncular[socket.id].puan,
+                                        }
+                                        games[s_obj.qr].oyuncular[socket.id].index=rnd
+                                        io.sockets.connected[socket.id].emit('soru',sObj)
+                                    }
+                                })        
+
+                            }
+                        } 
+                    }  
+                })
             })
         }
         
@@ -148,48 +190,10 @@ var games=[]
 
    
 
-    socket.on('ready',(qr)=>{
-        if(games[qr].basladimi==true){
-            io.sockets.connected[socket.id].emit('ready','Oyun zaten başladı')
-        }else{
-            var kontrol=games[qr].ready(socket.id)//true dönerse herkes hazır demek
-            if(kontrol==true){
-                for(var x in games[qr].oyuncular){
-                    io.sockets.connected[games[qr].oyuncular[x].id].emit('ready','basladi')//her bir kullanıcı için   
-                    console.log('başladı bilgisi gönderildi-> '+games[qr].oyuncular[x].id)
-                }
-            } 
-        }  
-    })
+    
 
         
-       socket.on('soru',(s_obj)=>{
-        if(games[s_obj.qr].basladimi){
-            var o=games[s_obj.qr].oyuncular[socket.id]//oyuncu
-            if(o.index!=-1 ){
-                if(sorular[o.index].cevap==s_obj.cvp){
-                    games[s_obj.qr].oyuncular[socket.id].puan++
-                }
-                else{
-                    games[s_obj.qr].oyuncular[socket.id].puan--
-                }
-                
-            }
-            else{
-            }
-            var rnd=Math.floor(Math.random()*(sorular.length))
-            var sObj={
-                soru:sorular[rnd].soru,
-                s0:sorular[rnd].s0,
-                s1:sorular[rnd].s1,
-                s2:sorular[rnd].s2,
-                s3:sorular[rnd].s3,
-                puan:games[s_obj.qr].oyuncular[socket.id].puan,
-            }
-            games[s_obj.qr].oyuncular[socket.id].index=rnd
-            io.sockets.connected[socket.id].emit('soru',sObj)
-        }
-    })        
+       
 
 
 
