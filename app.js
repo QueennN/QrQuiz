@@ -211,7 +211,7 @@ var games=[]
 })
 
 app.get('/',(req,res)=>{
-    console.log("qr bilgisi "+req.query.qr)
+    console.log("qr : "+req.query.qr + "\tip : " + req.connection.remoteAddress)
     fs.readFile('./public/index.html',(err,data)=>{
         if(!err & req.query.qr!=undefined){
             res.writeHead(200)
