@@ -130,38 +130,41 @@ var games=[]
  games['7']=new Game()
  games['8']=new Game()
  games['9']=new Game()
-
+var st=[]
 
  io.sockets.on('connection',(socket)=>{
+     st[socket.id]=null
     socket.on('oyuncu_ekle',(oyuncu)=>{
-        if(games[oyuncu.qr]){
-            games[oyuncu.qr].oyuncu_ekle(oyuncu.name,socket.id)
+        st[socket.id]=oyuncu.qr
+        var o_qr=st[socket.id]
+        if(games[o_qr]){
+            games[o_qr].oyuncu_ekle(oyuncu.name,socket.id)
 
             socket.on('isim_ekle',(oyuncu)=>{
                 console.log(oyuncu)
                 console.log(socket.id)
-                games[oyuncu.qr].isim_ekle(socket.id,oyuncu.name)
+                games[o_qr].isim_ekle(socket.id,oyuncu.name)
                 
-                socket.on('ready',(qr)=>{
-                    if(games[qr].basladimi==true){
+                socket.on('ready',()=>{
+                    if(games[o_qr].basladimi==true){
                         io.sockets.connected[socket.id].emit('ready','Oyun zaten başladı')
                     }else{
-                        var kontrol=games[qr].ready(socket.id)//true dönerse herkes hazır demek
+                        var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
                         if(kontrol==true){
-                            for(var x in games[qr].oyuncular){
-                                io.sockets.connected[games[qr].oyuncular[x].id].emit('ready','basladi')//her bir kullanıcı için   
-                                console.log('başladı bilgisi gönderildi-> '+games[qr].oyuncular[x].id)
+                            for(var x in games[o_qr].oyuncular){
+                                io.sockets.connected[games[o_qr].oyuncular[x].id].emit('ready','basladi')//her bir kullanıcı için   
+                                console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[x].id)
                                   
                             }
                             socket.on('soru',(s_obj)=>{
-                                if(games[s_obj.qr].basladimi){
-                                    var o=games[s_obj.qr].oyuncular[socket.id]//oyuncu
+                                if(games[o_qr].basladimi){
+                                    var o=games[o_qr].oyuncular[socket.id]//oyuncu
                                     if(o.index!=-1 ){
                                         if(sorular[o.index].cevap==s_obj.cvp){
-                                            games[s_obj.qr].oyuncular[socket.id].puan++
+                                            games[o_qr].oyuncular[socket.id].puan++
                                         }
                                         else{
-                                            games[s_obj.qr].oyuncular[socket.id].puan--
+                                            games[o_qr].oyuncular[socket.id].puan--
                                         }
                                         
                                     }
@@ -174,9 +177,9 @@ var games=[]
                                         s1:sorular[rnd].s1,
                                         s2:sorular[rnd].s2,
                                         s3:sorular[rnd].s3,
-                                        puan:games[s_obj.qr].oyuncular[socket.id].puan,
+                                        puan:games[o_qr].oyuncular[socket.id].puan,
                                     }
-                                    games[s_obj.qr].oyuncular[socket.id].index=rnd
+                                    games[o_qr].oyuncular[socket.id].index=rnd
                                     io.sockets.connected[socket.id].emit('soru',sObj)
                                 }
                             })      
