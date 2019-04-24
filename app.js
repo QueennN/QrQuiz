@@ -192,22 +192,21 @@ var st=[]
     })
     socket.on('disconnect',()=>{
         var rO=[]
-        for(var x in games){
-            if(games[x].oyuncular[socket.id]){//eğer varsa undefied yap dogru qr bul
-                games[x].oyuncular[socket.id]=undefined
-                console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
+        var x=st[socket.id]//qr
+        games[x].oyuncular[socket.id]=undefined
+        console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
 
-                for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
-                    if(games[x].oyuncular[y]!=undefined){
-                        rO[y]=games[x].oyuncular[y]
-                    }
-                }
-                console.log("geriye kalanlar->")
-                console.log(rO)
-                games[x].oyuncular=rO//yeni listeyi ata
-                break
+        for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
+            if(games[x].oyuncular[y]!=undefined){
+                rO[y]=games[x].oyuncular[y]
             }
         }
+        console.log("geriye kalanlar->")
+        console.log(rO)
+        games[x].oyuncular=rO//yeni listeyi ata
+        break
+            
+        
         
         
     })

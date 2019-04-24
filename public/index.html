@@ -22,14 +22,12 @@
 
             var socket = io(); 
             var time=60
-            var qr='1'
             var oyuncu={
                 'name':null,
-                'qr':qr
+                'qr':null
             }
             var s_obj={
                 cvp:null,
-                'qr':qr
             }
             var change=function(mode){//0 qr , 1 ready , 2 game , 3 sonuclar
                 var items=[]
@@ -46,11 +44,8 @@
             }
          
             //----test---
-            qr=getParam('qr')
             console.log('qr->'+qr)
-            oyuncu.qr=qr
-            s_obj.qr=qr
-            oyuncu.name=''
+            oyuncu.qr=getParam('qr')
             //---test---
             change(1)//test için 1 normalde 0 olmalı
             socket.emit('oyuncu_ekle',oyuncu)
