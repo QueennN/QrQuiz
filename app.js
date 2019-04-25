@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 var fs=require('fs')
 var sorular=require('./sorular')
 
+
 //-------------cfg--------------
 app.use('/public',express.static('public'))
 
