@@ -133,11 +133,11 @@ var games=[]
 var st=[]
 
  io.sockets.on('connection',(socket)=>{
+     console.log('baglandi')
     var o_qr=st[socket.id]
      st[socket.id]=null
     socket.on('oyuncu_ekle',(oyuncu)=>{
         st[socket.id]=oyuncu.qr
-        
         if(games[o_qr]){
             games[o_qr].oyuncu_ekle(oyuncu.name,socket.id)
 
