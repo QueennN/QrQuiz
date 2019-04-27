@@ -196,17 +196,20 @@ var st=[]
     socket.on('disconnect',()=>{
         var rO=[]
         var x=st[socket.id]//qr
-        games[x].oyuncular[socket.id]=undefined
-        console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
+        if(games[x]){
+            games[x].oyuncular[socket.id]=undefined
+            console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
 
-        for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
-            if(games[x].oyuncular[y]!=undefined){
-                rO[y]=games[x].oyuncular[y]
+            for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
+                if(games[x].oyuncular[y]!=undefined){
+                    rO[y]=games[x].oyuncular[y]
+                }
             }
+            console.log("geriye kalanlar->")
+            console.log(rO)
+            games[x].oyuncular=rO//yeni listeyi ata
         }
-        console.log("geriye kalanlar->")
-        console.log(rO)
-        games[x].oyuncular=rO//yeni listeyi ata
+        
 
     })
 })
