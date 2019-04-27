@@ -135,18 +135,19 @@ var st=[]
  io.sockets.on('connection',(socket)=>{
      console.log('baglandi')
     var o_qr=st[socket.id]
-     st[socket.id]=null
-    socket.on('oyuncu_ekle',(oyuncu)=>{
-        st[socket.id]=oyuncu.qr
+     st[socket.id]=''
+    socket.on('oyuncu_ekle',(qr)=>{
+        o_qr=qr
+        console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
         if(games[o_qr]){
-            games[o_qr].oyuncu_ekle(oyuncu.name,socket.id)
+            games[o_qr].oyuncu_ekle('',socket.id)
 
-            socket.on('isim_ekle',(oyuncu)=>{
-                if(oyuncu.name)
-                console.log('İsim eklendi'+oyuncu.name)
+            socket.on('isim_ekle',(name)=>{
+                if(name)
+                console.log('İsim eklendi'+name)
                 
                 console.log(socket.id)
-                games[o_qr].isim_ekle(socket.id,oyuncu.name)
+                games[o_qr].isim_ekle(socket.id,name)
                 
                 socket.on('ready',()=>{
                     if(games[o_qr].basladimi==true){
