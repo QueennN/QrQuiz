@@ -133,15 +133,18 @@ var games=[]
 var st=[]
 
  io.sockets.on('connection',(socket)=>{
+    var o_qr=st[socket.id]
      st[socket.id]=null
     socket.on('oyuncu_ekle',(oyuncu)=>{
         st[socket.id]=oyuncu.qr
-        var o_qr=st[socket.id]
+        
         if(games[o_qr]){
             games[o_qr].oyuncu_ekle(oyuncu.name,socket.id)
 
             socket.on('isim_ekle',(oyuncu)=>{
-                console.log(oyuncu)
+                if(oyuncu.name)
+                console.log('İsim eklendi'+oyuncu.name)
+                
                 console.log(socket.id)
                 games[o_qr].isim_ekle(socket.id,oyuncu.name)
                 
