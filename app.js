@@ -204,11 +204,7 @@ var st=[]
         console.log("geriye kalanlar->")
         console.log(rO)
         games[x].oyuncular=rO//yeni listeyi ata
-        break
-            
-        
-        
-        
+
     })
 })
 
