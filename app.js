@@ -29,7 +29,7 @@ class Game{
 
 
     oyuncu_ekle(name,id){ 
-        console.log('ekle') 
+        
         if(this.basladimi==false){
             this.oyuncular[id]=new Oyuncu(name,id)
             console.log('oyuncuid: ' + id+' oyuna eklendi')
@@ -134,21 +134,17 @@ var games=[]
 var st=[]
 
  io.sockets.on('connection',(socket)=>{
-     console.log('baglandi')
-    var o_qr=st[socket.id]
-     st[socket.id]=''
-    socket.on('oyuncu_ekle',(qr)=>{
-        o_qr=qr
-        console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
+     st[socket.id]=null
+    socket.on('oyuncu_ekle',(oyuncu)=>{
+        st[socket.id]=oyuncu.qr
+        var o_qr=st[socket.id]
         if(games[o_qr]){
-            games[o_qr].oyuncu_ekle('',socket.id)
+            games[o_qr].oyuncu_ekle(oyuncu.name,socket.id)
 
-            socket.on('isim_ekle',(name)=>{
-                if(name)
-                console.log('İsim eklendi'+name)
-                
+            socket.on('isim_ekle',(oyuncu)=>{
+                console.log(oyuncu)
                 console.log(socket.id)
-                games[o_qr].isim_ekle(socket.id,name)
+                games[o_qr].isim_ekle(socket.id,oyuncu.name)
                 
                 socket.on('ready',()=>{
                     if(games[o_qr].basladimi==true){
@@ -198,21 +194,22 @@ var st=[]
     socket.on('disconnect',()=>{
         var rO=[]
         var x=st[socket.id]//qr
-        if(games[x]){
-            games[x].oyuncular[socket.id]=undefined
-            console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
+        games[x].oyuncular[socket.id]=undefined
+        console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
 
-            for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
-                if(games[x].oyuncular[y]!=undefined){
-                    rO[y]=games[x].oyuncular[y]
-                }
+        for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
+            if(games[x].oyuncular[y]!=undefined){
+                rO[y]=games[x].oyuncular[y]
             }
-            console.log("geriye kalanlar->")
-            console.log(rO)
-            games[x].oyuncular=rO//yeni listeyi ata
         }
+        console.log("geriye kalanlar->")
+        console.log(rO)
+        games[x].oyuncular=rO//yeni listeyi ata
+        break
+            
         
-
+        
+        
     })
 })
 

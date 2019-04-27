@@ -44,16 +44,17 @@
             }
          
             //----test---
+            console.log('qr->'+qr)
             oyuncu.qr=getParam('qr')
             //---test---
             change(1)//test için 1 normalde 0 olmalı
-            socket.emit('oyuncu_ekle',oyuncu.qr)
+            socket.emit('oyuncu_ekle',oyuncu)
 
             $('.bk').click(()=>{//ready butonu
                 if($('.isim').val()!=""){
                     oyuncu.name=$('.isim').val()
-                    socket.emit('isim_ekle',oyuncu.name)
-                    socket.emit('ready')
+                    socket.emit('isim_ekle',oyuncu)
+                    socket.emit('ready',qr)
                     $('#buton').text='Waiting for others'
                 }
             })
