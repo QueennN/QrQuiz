@@ -29,7 +29,6 @@ class Game{
 
 
     oyuncu_ekle(name,id){ 
-        console.log('ekle') 
         if(this.basladimi==false){
             this.oyuncular[id]=new Oyuncu(name,id)
             console.log('oyuncuid: ' + id+' oyuna eklendi')
