@@ -85,7 +85,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*60);
+            }, 1000*2);
         } 
     }
 
@@ -103,17 +103,21 @@ class Game{
         }
 
         //oyunculara bittiğini ve puanları bildir.
-        for(var x in this.oyuncular){
-            console.log(this.oyuncular[x].name+'->'+this.oyuncular[x].puan)
-            this.oyuncular[x].ready=false
-            io.sockets.connected[this.oyuncular[x].id].emit('bitti',rP)
+        if(io.sockets.connected.length!=0){
+            for(var x in this.oyuncular){
+           
+                console.log(this.oyuncular[x].name+'->'+this.oyuncular[x].puan)
+                this.oyuncular[x].ready=false
+                io.sockets.connected[this.oyuncular[x].id].emit('bitti',rP)
+            }
+            //beklemesırasını oyuna dahil et
+            for(var x in this.beklemesirasi){
+                this.oyuncular[x]=this.beklemesirasi[x]
+                console.log(this.beklemesirasi[x]+'->'+this.oyuncular[x])
+            } 
+            this.beklemesirasi=[] 
         }
-        //beklemesırasını oyuna dahil et
-        for(var x in this.beklemesirasi){
-            this.oyuncular[x]=this.beklemesirasi[x]
-            console.log(this.beklemesirasi[x]+'->'+this.oyuncular[x])
-        } 
-        this.beklemesirasi=[]
+        
     }
 }
 
@@ -196,19 +200,19 @@ var st=[]//socketlere göre qr
     })
     socket.on('disconnect',()=>{
         var rO=[]
-        var x=st[socket.id]//qr
-        if(games[x]){
-            games[x].oyuncular[socket.id]=undefined
-            console.log('qr->'+x+' '+socket.id+' çıkış yaptı')
+        var dqr=st[socket.id]//qr
+        if(games[dqr]){
+            games[dqr].oyuncular[socket.id]=undefined
+            console.log('qr->'+dqr+' '+socket.id+' çıkış yaptı')
 
-            for(var y in games[x].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
-                if(games[x].oyuncular[y]!=undefined){
-                    rO[y]=games[x].oyuncular[y]
+            for(var y in games[dqr].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
+                if(games[dqr].oyuncular[y]!=undefined){
+                    rO[y]=games[dqr].oyuncular[y]
                 }
             }
             console.log("geriye kalanlar->")
             console.log(rO)
-            games[x].oyuncular=rO//yeni listeyi ata
+            games[dqr].oyuncular=rO//yeni listeyi ata
         }
         
 
