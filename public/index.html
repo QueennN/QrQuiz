@@ -145,9 +145,15 @@
                 }
         </style>
         <style>
+            body{
+                background-image:url("../public/bg.png");
+                background-size:auto;
+                
+            }
             ::-webkit-scrollbar { 
                  display: none; 
                 }
+                div{border:0px black solid}
                 .soru{
                     height:40%;
                 }
@@ -169,14 +175,15 @@
     </head>
     <body style="background-color: #eee; font-size: 34px; padding:0;" class="display-5">
         <div class="container-fluid">
-                <div class="row">
-                        <div class="col-12 display-2 text-center">QrQuiz!</div> 
-                    </div>
-
-            <form class="mt-5 login" style="height:100%;">
-                <div class="row">
-                    <div class=" col-12 isimkutu form-group">
-                        <input class=" m-auto col-6 form-control isim mr-2" placeholder="Lütfen isim girin..." style="width:60%" type="text" id="name">
+                
+            <form class="login" style="height:100%;">
+                <div class="row" >
+                    <div class="col-12 display-2 text-center">QrQuiz!</div> 
+                </div>
+    
+                <div class="row"  style="margin-top:30%;" >
+                    <div class="col-12 isimkutu form-group">
+                        <input class=" m-auto col-6 form-control isim mr-2" placeholder="Lütfen isim girin..."type="text" id="name">
                     </div>
                     <div class=" m-auto col-4 btn btn-lg btn-danger" id='#buton' style="width:50%">Ready</div>
                 </div>
