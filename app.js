@@ -5,7 +5,6 @@ var io = require('socket.io')(http);
 var fs=require('fs')
 var sorular=require('./sorular')
 
-
 //-------------cfg--------------
 app.use('/public',express.static('public'))
 
@@ -29,6 +28,7 @@ class Game{
 
 
     oyuncu_ekle(name,id){ 
+        console.log('ekle') 
         if(this.basladimi==false){
             this.oyuncular[id]=new Oyuncu(name,id)
             console.log('oyuncuid: ' + id+' oyuna eklendi')
@@ -130,7 +130,7 @@ var games=[]
  games['7']=new Game()
  games['8']=new Game()
  games['9']=new Game()
-var st=[]
+var st=[]//socketlere göre qr
 
  io.sockets.on('connection',(socket)=>{
      console.log('baglandi')
@@ -138,12 +138,12 @@ var st=[]
      st[socket.id]=''
     socket.on('oyuncu_ekle',(qr)=>{
         o_qr=qr
-        console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
+        
         if(games[o_qr]){
+            console.log('Qr bulundu')
             games[o_qr].oyuncu_ekle('',socket.id)
-
+            console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
             socket.on('isim_ekle',(name)=>{
-                if(name)
                 console.log('İsim eklendi'+name)
                 
                 console.log(socket.id)
@@ -223,7 +223,7 @@ app.get('/',(req,res)=>{
             res.end(data)    
         }
         else{
-            res.end('Qr olmadan giremezsin.')
+            res.end('Etrafınızda bir QrQuiz qrı bulup girmeyi deneyin..')
         }
     })
 })
