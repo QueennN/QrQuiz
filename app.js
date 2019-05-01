@@ -28,7 +28,6 @@ class Game{
 
 
     oyuncu_ekle(name,id){ 
-        console.log('ekle') 
         if(this.basladimi==false){
             this.oyuncular[id]=new Oyuncu(name,id)
             console.log('oyuncuid: ' + id+' oyuna eklendi')
@@ -85,7 +84,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*2);
+            }, 1000*60);
         } 
     }
 
@@ -142,7 +141,6 @@ var st=[]//socketlere göre qr
      st[socket.id]=''
     socket.on('oyuncu_ekle',(qr)=>{
         o_qr=qr
-        
         if(games[o_qr]){
             console.log('Qr bulundu')
             games[o_qr].oyuncu_ekle('',socket.id)
