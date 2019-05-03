@@ -87,7 +87,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*3);
+            }, 1000*60);
         } 
     }
 
