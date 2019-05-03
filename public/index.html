@@ -109,7 +109,7 @@
 
             socket.on('bitti',(oyuncular)=>{
                 $('.sonuckutu li').remove()
-                $('.sonuckutu').append('<li class="list-group-item bg-danger text-white">Top 5 Congratulations!</li>')
+                $('.sonuckutu').append('<li class="list-group-item bg-info text-white">Top 5 Congratulations!</li>')
                 
                 console.log(oyuncular)
                 change(3)
@@ -168,7 +168,10 @@
                 }
                 .kutu > li:hover{
                     
-                   background:rgba(255,255,255,0.7);
+                   background:rgba(255,255,255,0.9);
+                }
+                .cevap{
+                    height:20%;;
                 }
         </style>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -186,7 +189,7 @@
                     <div class="col-12 isimkutu form-group">
                         <input class=" m-auto col-6 form-control isim mr-2" placeholder="Lütfen isim girin..."type="text" id="name">
                     </div>
-                    <div class="bk m-auto col-4 btn btn-lg bg-info" id='#buton' style="width:50%">Ready</div>
+                    <div class="bk m-auto col-4 btn btn-lg bg-info text-white" id='#buton' style="width:50%">Hazır</div>
                 </div>
             </form>
             
@@ -197,7 +200,7 @@
                     <div class="col-4 ustkutu">QrQuiz!</div>
                     <div class="col-4 ustkutu" id='zaman'></div>
                 </div>
-                <div class="row justify-content-center mb-4 " style='height:35%;'>
+                <div class="row justify-content-center mb-4">
                     <div class="col-12 text-center">
                         <div class="list-group">
                             <ul class="list-group" style="height:100%">
