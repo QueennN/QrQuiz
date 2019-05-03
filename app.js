@@ -84,7 +84,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*60);
+            }, 1000*3 );
         } 
     }
 
@@ -103,16 +103,18 @@ class Game{
 
         //oyunculara bittiğini ve puanları bildir.
         if(io.sockets.connected.length!=0){
-            for(var x in this.oyuncular){
+            console.log('Bitti bilgisi gönderilecekler...')
+            for(var xx in this.oyuncular){
            
-                console.log(this.oyuncular[x].name+'->'+this.oyuncular[x].puan)
-                this.oyuncular[x].ready=false
-                io.sockets.connected[this.oyuncular[x].id].emit('bitti',rP)
+                console.log(this.oyuncular[xx].name+'->'+this.oyuncular[xx].puan)
+                this.oyuncular[xx].ready=false
+                console.log(this.oyuncular[xx].id)
+                io.sockets.connected[this.oyuncular[xx].id].emit('bitti',rP)
             }
             //beklemesırasını oyuna dahil et
-            for(var x in this.beklemesirasi){
-                this.oyuncular[x]=this.beklemesirasi[x]
-                console.log(this.beklemesirasi[x]+'->'+this.oyuncular[x])
+            for(var xxx in this.beklemesirasi){
+                this.oyuncular[xxx]=this.beklemesirasi[xxx]
+                console.log(this.beklemesirasi[xxx]+'->'+this.oyuncular[xxx])
             } 
             this.beklemesirasi=[] 
         }
@@ -135,8 +137,8 @@ var games=[]
  games['9']=new Game()
 var st=[]//socketlere göre qr
 
- io.sockets.on('connection',(socket)=>{
-     console.log('baglandi')
+io.sockets.on('connection',(socket)=>{
+    console.log('baglandi')
     var o_qr=st[socket.id]
      st[socket.id]=''
     socket.on('oyuncu_ekle',(qr)=>{
@@ -198,23 +200,18 @@ var st=[]//socketlere göre qr
     })
     socket.on('disconnect',()=>{
         var rO=[]
-        var dqr=st[socket.id]//qr
-        if(games[dqr]){
-            games[dqr].oyuncular[socket.id]=undefined
-            console.log('qr->'+dqr+' '+socket.id+' çıkış yaptı')
+        games[o_qr].oyuncular[socket.id]=undefined
+        console.log('qr->'+o_qr+' '+socket.id+' çıkış yaptı')
 
-            for(var y in games[dqr].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
-                if(games[dqr].oyuncular[y]!=undefined){
-                    rO[y]=games[dqr].oyuncular[y]
-                }
+        for(var y in games[o_qr].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
+            if(games[o_qr].oyuncular[y]!=undefined){
+                rO[y]=games[o_qr].oyuncular[y]
             }
-            console.log("geriye kalanlar->")
-            console.log(rO)
-            games[dqr].oyuncular=rO//yeni listeyi ata
         }
-        
-
-    })
+        console.log("geriye kalanlar->")
+        console.log(rO)
+        games[o_qr].oyuncular=rO//yeni listeyi ata     
+    }) 
 })
 
 app.get('/',(req,res)=>{
