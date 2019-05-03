@@ -3,10 +3,13 @@ var app =express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs=require('fs')
+var bodyParser = require('body-parser')
 var sorular=require('./sorular')
 
 //-------------cfg--------------
 app.use('/public',express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 
 class Oyuncu{
@@ -84,7 +87,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*3 );
+            }, 1000*3);
         } 
     }
 
@@ -200,17 +203,30 @@ io.sockets.on('connection',(socket)=>{
     })
     socket.on('disconnect',()=>{
         var rO=[]
-        games[o_qr].oyuncular[socket.id]=undefined
+        var rSt=[]
+        console.log(games[o_qr])
+        if(games[o_qr]){
+            games[o_qr].oyuncular[socket.id]=undefined
+        st[socket.id]=undefined
         console.log('qr->'+o_qr+' '+socket.id+' çıkış yaptı')
 
         for(var y in games[o_qr].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
             if(games[o_qr].oyuncular[y]!=undefined){
                 rO[y]=games[o_qr].oyuncular[y]
             }
+            if(st[socket.id]!=undefined){
+                rSt[y]=st[y]
+            }
         }
         console.log("geriye kalanlar->")
         console.log(rO)
         games[o_qr].oyuncular=rO//yeni listeyi ata     
+        st=rSt//yeni soketqr listesini ata
+        }
+        else{
+            console.log('Böyle bir socket yok')
+        }
+        
     }) 
 })
 

@@ -482,19 +482,19 @@ var x=[
         {
                 soru:'10.Cumhurbaşkanımızın adı nedir ?',
                 cevap:'1',
-                s0:'Turgut özal',
-                s1:'Ahmet necdet sezer',
-                s2:'Süleyman demirel',
-                s3:'Recep Tayyip Erdoğan',
+                s0:'Turgut Özal',
+                s1:'Ahmet Necdet Sezer',
+                s2:'Süleyman Demirel',
+                s3:'Abdullah Gül',
             },
         
         {
                 soru:'Başlangıç filminin başrol oyuncusu kimdir?',
                 cevap:'1',
                 s0:'Morgan Freman',
-                s1:'Leonardo di caprio',
-                s2:'Brad pit',
-                s3:'Cristian bale',
+                s1:'Leonardo Di Caprio',
+                s2:'Brad Pit',
+                s3:'Cristian Bale',
             },
         
         {
@@ -509,10 +509,10 @@ var x=[
         {
                 soru:'Süper lig tarihinde en fazla gol atan futbolcu kimdir ? ',
                 cevap:'1',
-                s0:'Arif erdem',
+                s0:'Arif Erdem',
                 s1:'Hakan Şükür',
                 s2:'Okan Buruk',
-                s3:'Metin tekin',
+                s3:'Metin Tekin',
             },
         
         {
