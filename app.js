@@ -204,7 +204,6 @@ io.sockets.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
         var rO=[]
         var rSt=[]
-        console.log(games[o_qr])
         if(games[o_qr]){
             games[o_qr].oyuncular[socket.id]=undefined
         st[socket.id]=undefined
