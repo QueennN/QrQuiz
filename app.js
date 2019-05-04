@@ -236,10 +236,31 @@ app.get('/',(req,res)=>{
             res.end(data)    
         }
         else{
-            res.end('Etrafınızda bir QrQuiz qrı bulup girmeyi deneyin..')
+            res.end('Etrafinizda bir QrQuiz qr bulup girmeyi deneyin..')
         }
     })
 })
+
+app.get('/veri',(req,res)=>{
+    res.write('-------Oyun bilgileri-------\n')
+    for(i in games){
+        res.write('Oyun->'+i+'\n')
+        res.write('Oyuncular->\n')
+        for(j in games[i].oyuncular){
+            res.write(games[i].oyuncular[j].name+'\n')
+        }
+    }
+    res.end()
+})
+
+
+
+
+
+
+
+
+
 
 http.listen(80, function(){
     console.log('DENEME listening on *:80');
