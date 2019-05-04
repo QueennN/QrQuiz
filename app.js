@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 var fs=require('fs')
 var bodyParser = require('body-parser')
 var sorular=require('./sorular')
-
+asdsa
 //-------------cfg--------------
 app.use('/public',express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
