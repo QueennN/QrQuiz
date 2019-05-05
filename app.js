@@ -145,7 +145,7 @@ io.sockets.on('connection',(socket)=>{
     var o_qr=st[socket.id]
      st[socket.id]=''
     socket.on('oyuncu_ekle',(qr)=>{
-        toplam_oyuncu++
+        toplam_ziyaret++
         o_qr=qr
         if(games[o_qr]){
             console.log('Qr bulundu')
@@ -245,7 +245,7 @@ app.get('/',(req,res)=>{
 
 app.get('/veri',(req,res)=>{
     res.write('Toplam Oyun : '+games.length+'\n')
-    res.write('Toplam oyuncu : '+ toplam_oyuncu+'\n')
+    res.write('Toplam oyuncu : '+ toplam_ziyaret+'\n')
     res.write('-------Oyun bilgileri-------\n')
     for(i in games){
         res.write('Oyun->'+i+'\n')
