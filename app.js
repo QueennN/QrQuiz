@@ -9,7 +9,7 @@ var sorular=require('./sorular')
 app.use('/public',express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-var toplam_oyuncu=0
+var toplam_ziyaret=0// toplamda ziyaret eden oyuncuları verir.veri tabanında tutulmadıgı için sıfırlanabilir.
 
 class Oyuncu{
     constructor(name,id){
@@ -243,7 +243,7 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/veri',(req,res)=>{
-    res.write('Toplam Oyun : '+games.length)
+    res.write('Toplam Oyun : '+games.length+'\n')
     res.write('Toplam oyuncu : '+ toplam_oyuncu+'\n')
     res.write('-------Oyun bilgileri-------\n')
     for(i in games){
