@@ -105,7 +105,7 @@ class Game{
         }
 
         //oyunculara bittiğini ve puanları bildir.
-        if(io.sockets.connected.length!=0){
+        
             console.log('Bitti bilgisi gönderilecekler...')
             for(var xx in this.oyuncular){
            
@@ -120,7 +120,7 @@ class Game{
                 console.log(this.beklemesirasi[xxx]+'->'+this.oyuncular[xxx])
             } 
             this.beklemesirasi=[] 
-        }
+        
         
     }
 }
