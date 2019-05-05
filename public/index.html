@@ -63,9 +63,9 @@
                 if(durum=='basladi'){
                     change(2)
                     socket.emit ('soru',s_obj)
-                    setInterval(() => {
+                   var terval= setInterval(() => {
                         if(time==0){
-                            
+                            clearInterval(terval)
                         }
                         else{
                             time--
