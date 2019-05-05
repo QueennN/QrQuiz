@@ -9,6 +9,7 @@ var sorular=require('./sorular')
 app.use('/public',express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(express.json());
 var toplam_ziyaret=0// toplamda ziyaret eden oyuncuları verir.veri tabanında tutulmadıgı için sıfırlanabilir.
 
 class Oyuncu{
@@ -262,7 +263,59 @@ app.get('/veri',(req,res)=>{
 
 
 
+var port = 8992;
+const { exec } = require('child_process');
 
+
+
+
+app.post('/', function (request, response) {
+    //console.log(request.body); 
+    if(request.headers['x-github-event']){
+       if(request.headers['x-github-event'] == 'push'){
+        exec('cd /home/pi/Desktop/qrquiz && git fetch && git reset --hard origin/master',(err,stdout,stderr) =>{
+            console.log(err);
+            console.log(stdout);
+            console.log(stderr);
+		    console.log(new Date().toISOString()+' : pulled');
+        });
+           response.status(200);
+       }
+    }else{
+        response.status(500);
+    }
+    response.end();   
+});
+
+
+
+ exec('cd /home/pi/Desktop/qrquiz && git fetch && git reset --hard origin/master',(err,stdout,stderr) =>{
+
+            console.log(err);
+            console.log(stdout);
+            console.log(stderr);
+		console.log(new Date().toISOString()+' : pulled');
+        
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        app.listen(port);
 
 
 http.listen(80, function(){
