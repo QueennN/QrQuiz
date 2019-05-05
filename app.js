@@ -261,7 +261,7 @@ app.get('/veri',(req,res)=>{
 
 
 
-
+//123
 
 var port = 8992;
 const { exec } = require('child_process');
