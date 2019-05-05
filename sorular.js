@@ -540,6 +540,340 @@ var x=[
                 s2:'Amsterdam',
                 s3:'Bişkek',
             },   
+
+            {
+                soru: 'Duru sakin havada çıkan kuru soğuk anlamına gelen ayaz kelimesinin kökeni hangisidir? ',
+                cevap:'0',
+                s0:'Aydınlık ',
+                s1:'Keskinlik',
+                s2:'Karanlık',
+                s3:'Yanlızlık',
+            }, 
+        
+        
+        {
+                soru:'Hangi ikisi Türkiye 1. futbol liginden futbolcu olarak şampiyonluk yaşamamıştır?',
+                cevap:'2',
+            s0:'Aykut Kocaman – Ertuğrul Sağlam ',
+              s1:'Ersun Yanal – Şenol Güneş',
+                s2:'Mustafa Denizli – Fatih Terim',
+          s3:'Rıdvan Dilmen – Sergen Yalçın',
+            }, 
+        
+        
+        {
+                soru:' Hangisi Fransız heykeltıraş Rodin’in eserlerinden biri değildir?',
+                cevap:'3',
+                  s0:'Düşünen adam ',
+                s1:'Çömelen kadın',
+                s2:'Yürüyen adam',
+                s3:'Uyuyan kadın',
+            }, 
+        
+        
+        {
+                soru:' Kur’an-ı Kerim’de hangisi üzerine yemin edilmemiştir?',
+                cevap:'2',
+                  s0:'Deniz',
+                s1:'Güneş',
+                s2:'Arı',
+                s3:'Kalem',
+            }, 
+        
+        
+        {
+                soru:' Türkiye “Mavi Akım” projesini aşağıdaki devletlerin hangisiyle gerçekleştirmiştir?',
+                cevap:'0',
+                  s0:'Azerbaycan ',
+                s1:'Gürcistan',
+                s2:'Rusya',
+                s3:'Türkmenistan',
+            }, 
+        {
+                soru:' Günümüzde özellikle Kur’an-ı Kerim okurken kullanılan küçük masaya ne ad verilir?',
+                cevap:'1',
+                  s0:'Minber ',
+                s1:'RAhle',
+                s2:'Kandil',
+                s3:'Mihrap',
+            }, 
+        
+        
+        {
+                soru:' Sultan Abdülaziz döneminde yaşanan trajikomik bir aşk hikayesini anlatan, Recaizade Mahmud Ekrem’in tek romanı olan eser hangisidir?',
+                cevap:'2',
+                  s0:'İntibah ',
+                s1:'Sergüzeşt',
+                s2:'Araba sevdası',
+                s3:'Karabibik',
+            }, 
+        {
+                soru:'“Alçak Gönüllü” anlamına gelen kelimenin doğru yazılışı nasıldır?',
+                cevap:'0',
+                  s0:'Mütevazı ',
+                s1:' Mütevazi',
+                s2:'Mütavazi',
+                s3:'Mütavazı',
+            }, 
+        {
+                soru:' Türkiye’nin hangi ülkeye olan kara sınırı daha uzundur?',
+                cevap:'0',
+                  s0:'Ermenistan',
+                s1:'Gürcista',
+                s2:'Yunanistan',
+                s3:'Bulgaristan',
+            }, 
+        
+        {
+                soru:' Osmanlı’nın toplam kaç padişahı olmuştur? ',
+                cevap:'3',
+                  s0:'25',
+                s1:'20',
+                s2:'30',
+                s3:'36',
+            }, 
+        {
+                soru:'Diğer adı “Eskişehir Taşı” olan taş hangisidir?',
+                cevap:'1',
+                  s0:'Oltu Taşı ',
+                s1:'Lüle Taşı',
+                s2:'Çakmak Taşı',
+                s3:'Sünger Taşı',
+            }, 
+        {
+                soru:'Türkiye’nin Karadeniz’deki en büyük adası hangi şehirle aynı adı taşır?',
+                cevap:'1',
+                  s0:'Samsun',
+                s1:'Giresun',
+                s2:'Ordu',
+                s3:'Sinop',
+            }, 
+               
+        {
+                soru:'Türkçede kelimeler en çok hangi harfle başlar?',
+                cevap:'0',
+                  s0:'K  Harfi ',
+                s1:'M Harfi',
+                s2:'R Harfi',
+                s3:'S Harfi',
+            }, 
+        {
+                soru:'Türkiye aşağıdaki kuruluşlardan hangisine üye değildir?',
+                cevap:'1',
+                  s0:'AGİT',
+                s1:'Şanghay İşbirliği Örgütü',
+                s2:'BM',
+                s3:'NATO',
+            }, 
+        {
+                soru:' Hangisi Fransız heykeltıraş Rodin’in eserlerinden biri değildir?',
+                cevap:'3',
+                  s0:'Düşünen adam ',
+                s1:'Çömelen kadın',
+                s2:'Yürüyen adam',
+                s3:'Uyuyan kadın',
+            }, 
+        
+        
+        
+        
+        
+        
+        {
+                soru:'Eylül 2018de TÜİK tarafından açıklanan "Mutlu iller sıralamasında" birinci olan il aşağıdakilerden hangisidir?',
+                cevap:'3',
+                  s0:'Mersin ',
+                s1:'İzmir',
+                s2:'Karabük',
+                s3:'Sinop',
+            }, 
+        {
+                soru:'Aşağıda verilen ülkelerden hangisi bir ada ülkesi değildir?',
+                cevap:'1',
+                  s0:'Japonya ',
+                s1:'İsviçre',
+                s2:'Filipinler',
+                s3:'Malta',
+            }, 
+        {
+                soru:'Aşağıda verilen ülkelerden hangisi Orta Asyada yer alan bağımsız Türk Cumhuriyetleri arasında yer almaz?',
+                cevap:'3',
+                  s0:'Türkmenistan ',
+                s1:'Kazakistan',
+                s2:'Özbekistan',
+                s3:'Tataristan',
+            }, 
+        
+        
+        
+        
+        
+        {
+                soru:'"Devlet Ana", "Yorgun Savaşçı" ve "Esir Şehrin İnsanları" adlı eserlerin yazarı aşağıda verilenlerden hangisidir?',
+                cevap:'1',
+                  s0:'Orhan KEMAL ',
+                s1:'Kemal TAHİR',
+                s2:'Peyami SAFA',
+                s3:'Yaşar KEMAL',
+            }, 
+        {
+                soru:' "Çölün Gelini" olarak bildiğimiz Palmira şehri hangi ülke sınırları içerisinde yer alır?',
+                cevap:'1',
+                  s0:'İran ',
+                s1:'Suriye',
+                s2:'Yunanistan',
+                s3:'Kırım',
+            }, 
+        
+        {
+                soru:'Milli Mücadeleyi konu alan, "Mondrostan Mudanyaya Kadar" adlı eserin yazarı aşağıda verilenlerden hangisidir?',
+                cevap:'3',
+                  s0:'Kazım Karabekir',
+                s1:'Namık Kemal',
+                s2:'İsmet İnönü',
+                s3:'Selahattin Tansel',
+            }, 
+        
+        
+        {
+                soru:' 2021 EXPO hangi ilimizde yapılacaktır?',
+                cevap:'3',
+                  s0:'İzmir',
+                s1:'Eskişehir',
+                s2:'İstanbul',
+                s3:'Hatay',
+            }, 
+        {
+                soru:'"Tarih-i Kadim" adlı eserin yazarı kimdir?',
+                cevap:'1',
+                  s0:'Ahmet Haşim',
+                s1:'Tefik Fikret',
+                s2:'Canap Şahabettin',
+                s3:'Namık Kemal',
+            }, 
+        {
+                soru:'1983te kurulan Kuzey Kıbrıs Türk Cumhuriyetini tanıyan ilk devlet aşağıdakilerden hangisidir?',
+                cevap:'2',
+                  s0:'Azerbaycan',
+                s1:'Türkmenistan',
+                s2:'Türkiye',
+                s3:'Lübnan',
+            }, 
+        
+        
+        
+        
+        
+        
+        {
+                soru:'Lale Devrinde kurulan ilk özel Türk matbaasında aşağıdaki bilim dallarından hangileri ile ilgili eserler basılmamıştır?',
+                cevap:'3',
+                  s0:'Cebir',
+                s1:'Edebiyat',
+                s2:'Kimya',
+                s3:'Tefsir',
+            }, 
+        {
+                soru:'Kurtuluş Savaşında göstermiş olduğu mücadele azmi nedeniyle aşağıdaki şehirlerden hangisine Atatürk Döneminde İstiklal Madalyası verilmiştir?',
+                cevap:'0',
+                  s0:'Maraş',
+                s1:'Urfa',
+                s2:'Antep',
+                s3:'Adana',
+            }, 
+        {
+                soru:'Montrö Boğazlar Sözleşmesini protesto etmesine rağmen iki yıl sonra imzalayan devlet aşağıdakilerden hangisidir?',
+                cevap:'2',
+                  s0:'Rusya',
+                s1:'İngiltere',
+                s2:'İtalya',
+                s3:'Alamanya',
+            }, 
+        
+        
+        
+        
+        
+        {
+                soru:'İlk Türk devlet ve ordu teşkilatının temellerinin aşağıdaki Türk hükümdarlarından hangisinin döneminde atıldığı söylenebilir?',
+                cevap:'2',
+                  s0:'Bilge Kağan ',
+                s1:'Kutluk Kağan',
+                s2:'Mete Han',
+                s3:'Teoman',
+            }, 
+        {
+                soru:'Konyadaki İnce Minareli Medrese aşağıdaki Türk-İslam devletlerinden hangisi döneminde inşa edilmiştir?',
+                cevap:'1',
+                  s0:'Osmanlı Devleti',
+                s1:'Anadolu Selçuklu Devleti',
+                s2:'Artuklu Devleti',
+                s3:'Akkoyunlu Devleti',
+            }, 
+        {
+                soru:'UNESCO Türkiye Milli Komisyonu tarafından Dünya Geçici Miras Listesine alınan ve "kırmızı periler diyarı" olarak anılan "Narman Peribacaları" hangi ilimizde yer alır?',
+                cevap:'0',
+                  s0:'Uşak',
+                s1:'Erzurum',
+                s2:'Nevşehir',
+                s3:'Konya',
+            }, 
+        
+        {
+                soru: 'Aşağıdakilerden hangisi devlet biçimi bakımından federal devlete (federasyon) örnektir?',
+                cevap:'2',
+                  s0:'Yunanistan',
+                s1:'Fransa',
+                s2:'Almanya',
+                s3:'isveç',
+            }, 
+        {
+                soru: 'Demokratik bir toplumda halk, yöneticilerini aşağıdakilerden hangisiyle belirler?',
+                cevap:'0',
+                  s0:'Seçim',
+                s1:'Gensoru',
+                s2:'Referandum',
+                s3:'Kuvvet ayrılığı',
+            }, 
+        
+        
+        
+        
+        
+        {
+                soru: 'Bir devlete uyrukluk bağı ile bağlı olan gerçek kişilere ne ad verilir?',
+                cevap:'3',
+                  s0:'Millet',
+                s1:'Birey',
+                s2:'Hemşehri',
+                s3:'Vatandaş',
+            }, 
+        {
+                soru:'1982 Anayasası’na göre, aşağıdakilerden hangisi Cumhuriyet’in niteliklerinden biri değildir?',
+                cevap:'3',
+                  s0:'Laik olma',
+                s1:'Demokratik olma',
+                s2:'Sosyal devlet olma',
+                s3:'Parlementer bir sisteme sahip olma',
+            }, 
+        {
+                soru: '1982 Anayasası’na göre, bir siyasal partinin kapatılmasına aşağıdakilerden hangisi karar verebilir?',
+                cevap:'1',
+                  s0:'İçişleri Bakanlığı ',
+                s1:'Anayasa Mahkemesi',
+                s2:'Uyuşmazlık Mahkemesi',
+                s3:'Danıştay',
+            }, 
+        
+        {
+                soru:' 1982 Anayasası’na göre, seçimler aşağıdakilerin hangisinin genel yönetim ve denetimi altında yapılır?',
+                cevap:'3',
+                s0:'Cumhurbaşkanı',
+                s1:'Başbakan',
+                s2:'TBMM',
+                s3:'Yargı organı',
+            }, 
+        
 ]
 
 module.exports=x

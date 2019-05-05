@@ -114,7 +114,10 @@
                 console.log(oyuncular)
                 change(3)
                 var control=0
-
+                oyuncular=oyuncular.sort(function (a, b) {
+                    return a.puan - b.puan;
+                });
+                
                 for(x in oyuncular){
                     $('.sonuckutu').append('<li class="list-group-item">'+oyuncular[x].name +' '+oyuncular[x].puan +'</li>')
                     control++

@@ -9,7 +9,7 @@ var sorular=require('./sorular')
 app.use('/public',express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+var toplam_oyuncu=0
 
 class Oyuncu{
     constructor(name,id){
@@ -144,6 +144,7 @@ io.sockets.on('connection',(socket)=>{
     var o_qr=st[socket.id]
      st[socket.id]=''
     socket.on('oyuncu_ekle',(qr)=>{
+        toplam_oyuncu++
         o_qr=qr
         if(games[o_qr]){
             console.log('Qr bulundu')
@@ -242,6 +243,8 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/veri',(req,res)=>{
+    res.write('Toplam Oyun : '+games.length)
+    res.write('Toplam oyuncu : '+ toplam_oyuncu+'\n')
     res.write('-------Oyun bilgileri-------\n')
     for(i in games){
         res.write('Oyun->'+i+'\n')
