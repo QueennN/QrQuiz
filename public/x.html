@@ -151,8 +151,19 @@
 
 
         <style>
+        ::-webkit-scrollbar { 
+            display: none; 
+        }
+
         body{
+            background-size:auto;
+            overflow: hidden;
             background-image:url("../public/bg.png");
+            user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
             
         }
         .login{
