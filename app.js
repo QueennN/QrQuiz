@@ -259,62 +259,6 @@ app.get('/veri',(req,res)=>{
 
 
 
-
-var port = 8992;
-const { exec } = require('child_process');
-
-
-
-
-app.post('/', function (request, response) {
-    //console.log(request.body); 
-    if(request.headers['x-github-event']){
-       if(request.headers['x-github-event'] == 'push'){
-        exec('cd /home/pi/Desktop/qrquiz && git fetch && git reset --hard origin/master',(err,stdout,stderr) =>{
-            console.log(err);
-            console.log(stdout);
-            console.log(stderr);
-		    console.log(new Date().toISOString()+' : pulled');
-        });
-           response.status(200);
-       }
-    }else{
-        response.status(500);
-    }
-    response.end();   
-});
-
-
-
- exec('cd /home/pi/Desktop/qrquiz && git fetch && git reset --hard origin/master',(err,stdout,stderr) =>{
-
-            console.log(err);
-            console.log(stdout);
-            console.log(stderr);
-		console.log(new Date().toISOString()+' : pulled');
-        
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        app.listen(port);
-
-
 http.listen(80, function(){
     console.log('DENEME listening on *:80');
   });
