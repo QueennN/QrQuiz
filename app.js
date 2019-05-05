@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json());
 var toplam_ziyaret=0// toplamda ziyaret eden oyuncuları verir.veri tabanında tutulmadıgı için sıfırlanabilir.
+var oyunsuresi=60
 
 class Oyuncu{
     constructor(name,id){
@@ -87,7 +88,7 @@ class Game{
             setTimeout(() => {
                 this.bitir()
           
-            }, 1000*60);
+            }, 1000*oyunsuresi);
         } 
     }
 

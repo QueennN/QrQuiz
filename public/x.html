@@ -112,7 +112,8 @@
                     socket.on('bitti',(oyuncular)=>{
                         $('.sonuc .sonuckutu').remove()
                         $('.sonuc .numara').remove()
-                        $('.sonuc').append('<div style="color:red; width:100%;" class="sonuckutu">En İyi 5 Kişi!</div>')
+                        
+                        $('.sonuc').append('<div style="color:white; background-color:rgba(66, 189, 255, 1); width:50%; float:left;" class="sonuckutu">İsimler</div> <div style="color:white; background-color:rgba(66, 189, 255, 1); float:left; width:50%;" class="sonuckutu">Paunlar</div>')
                         
                         console.log(oyuncular)
                         change(3)
@@ -122,7 +123,7 @@
                         });
                         
                         for(x in oyuncular){
-                            $('.sonuc').append('<div style="border-radius:40px;" class="sonuckutu">'+oyuncular[x].name +' '+oyuncular[x].puan +'</div>')
+                            $('.sonuc').append('<div style="width:50%; float:left;" class="sonuckutu">'+oyuncular[x].name+'</div> <div style=" float:left; width:50%;" class="sonuckutu">'+oyuncular[x].puan+'</div>')
                             control++
                             if(control==5){
                                 control=0
@@ -130,6 +131,7 @@
                             }
                               
                         }   
+                        $('.sonuc').append('<div style="color:white; width:100%;" class="sonuckutu">TEBRİKLER!</div>')
                         setTimeout(() => {
                             change(1)
                         },1000*7);
