@@ -232,7 +232,7 @@ io.sockets.on('connection',(socket)=>{
 
 app.get('/',(req,res)=>{
     console.log("qr : "+req.query.qr + "\tip : " + req.ip)
-    fs.readFile('./public/index.html',(err,data)=>{
+    fs.readFile('./public/x.html',(err,data)=>{
         if(!err & req.query.qr!=undefined){
             res.writeHead(200)
             res.end(data)    

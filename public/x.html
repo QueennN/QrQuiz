@@ -1,0 +1,275 @@
+<html>
+    <head>
+        <title>QrQuiz -Kolayca Tara! , Kolayca Oyna!</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta charset="utf-8">
+
+
+        <script>
+                $(function(){
+        
+                    function getParam(name, url) {
+                        if (!url) url = window.location.href;
+                        name = name.replace(/[[]]/g, '\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                            results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace('/+/g', ' '));
+                    }
+                    
+        
+        
+                    var socket = io(); 
+                    var time=60
+                    var oyuncu={
+                        'name':null,
+                        'qr':null
+                    }
+                    var s_obj={
+                        cvp:null,
+                    }
+                    var change=function(mode){//0 qr , 1 ready , 2 game , 3 sonuclar
+                        var items=[]
+                        items.push($('.qr'))
+                        items.push($('.login'))
+                        items.push($('.oyun'))
+                        items.push($('.sonuc'))
+        
+                        for(i in items)
+                        {
+                            items[i].hide()
+                        }
+                        items[mode].show()
+                    }
+                 
+                    //----test---
+                    oyuncu.qr=getParam('qr')
+                    //---test---
+                    change(1)//test için 1 normalde 0 olmalı
+                    socket.emit('oyuncu_ekle',oyuncu.qr)
+        
+                    $('.btn').click(()=>{//ready butonu
+                        if($('.isim').val()!=""){
+                            oyuncu.name=$('.isim').val()
+                            socket.emit('isim_ekle',oyuncu.name)
+                            socket.emit('ready')
+                            $('#buton').text='Waiting for others'
+                        }
+                    })
+        
+                    socket.on('ready',(durum)=>{
+                        time=60
+                        if(durum=='basladi'){
+                            change(2)
+                            socket.emit ('soru',s_obj)
+                           var terval= setInterval(() => {
+                                if(time==0){
+                                    clearInterval(terval)
+                                }
+                                else{
+                                    time--
+                                    $('#zaman').text('Kalan:'+time)
+                                }
+                            }, 1000);
+                        }
+                        else{
+                            $('#buton').text='Game is started already'
+                        }
+                    })
+                    $(window).bind("beforeunload", function() { 
+                        socket.emit('disconnect')
+                    });
+                    socket.on('soru',(soru)=>{
+                        $('.soru').text(soru.soru)
+                        $('#1').text(soru.s0)
+                        $('#2').text(soru.s1)
+                        $('#3').text(soru.s2)
+                        $('#4').text(soru.s3)
+                        $('#puan').text('Score: '+soru.puan)    
+                    })
+                    
+        
+                    $('#1').click(()=>{
+                        s_obj.cvp=0
+                        socket.emit('soru',s_obj)
+                    })
+                    $('#2').click(()=>{ 
+                        s_obj.cvp=1
+                        socket.emit('soru',s_obj)
+                    })
+                    $('#3').click(()=>{    
+                        s_obj.cvp=2         
+                        socket.emit('soru',s_obj)
+                    })
+                    $('#4').click(()=>{
+                        s_obj.cvp=3
+                        socket.emit('soru',s_obj)
+                    })
+        
+                    socket.on('bitti',(oyuncular)=>{
+                        $('.sonuc .sonuckutu').remove()
+                        $('.sonuc .numara').remove()
+                        $('.sonuc').append('<div style="color:red; width:100%;" class="sonuckutu">En İyi 5 Kişi!</div>')
+                        
+                        console.log(oyuncular)
+                        change(3)
+                        var control=0
+                        oyuncular=oyuncular.sort(function (a, b) {
+                            return a.puan - b.puan;
+                        });
+                        
+                        for(x in oyuncular){
+                            $('.sonuc').append('<div style="border-radius:40px;" class="sonuckutu">'+oyuncular[x].name +' '+oyuncular[x].puan +'</div>')
+                            control++
+                            if(control==5){
+                                control=0
+                                break
+                            }
+                              
+                        }   
+                        setTimeout(() => {
+                            change(1)
+                        },1000*7);
+                    })
+                })
+            
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <style>
+        body{
+            background-image:url("../public/bg.png");
+            
+        }
+        .login{
+            width:100%;
+            text-align: center;
+            color:white;
+        }
+        .logo{  
+            font-size:700%;           
+            height:12%;
+        }
+        .motto{
+            height:23%;
+            font-size:270%; 
+            color:white;
+        }
+        .isim{
+            width:60%; 
+            height:5%;
+            border-radius:10px;
+            font-size:250%;
+        }
+        .btn{ 
+            height:5%;
+            line-height:170%;
+            width:40%; 
+            margin:auto;
+            margin-top:3%;
+            background-color:rgba(66, 189, 255, 1);
+            font-size:270%;
+            vertical-align: middle;
+        }
+        .alt{
+            height:55%;
+        }
+        
+
+        .oyun{
+            height:100%;  
+            text-align: center;  
+            
+        }
+        .ust{
+            height:5%;
+            color:white;
+            font-size:180%;
+        }
+        .ustkutu{
+            padding-top:3px;
+            width:33%;
+            float:left;
+        }
+        .soru{
+            padding-top:25px; 
+            height:35%;
+            background-color:rgba(66, 189, 255, 1);
+            color:white;
+            font-size:270%;
+        }
+        .cevap{
+            height:15%;
+            line-height:100px;
+            background-color:rgba(255, 255, 255,1);
+            font-size:230%;
+            vertical-align: middle;
+        }
+        .cevap:hover{
+            background-color:rgba(255, 255, 255,.2);
+            color:white;
+           
+        }
+        .sonuc{
+            text-align: center;
+            width:100%;
+            color:black;
+        }
+        .sonuckutu{
+            background-color:white;
+            margin-bottom:20px;
+            width:100%;
+            height:100px; 
+            font-size:230%;
+            
+        }
+       
+        </style>
+       
+    </head>
+    <body>
+
+        <div class="login">
+            <div class="logo">QrQuiz!</div>
+            <div  class="motto" >Kolayca Tara! , Kolayca Oyna!</div>   
+            <div>
+                <input class="isim" placeholder="Lütfen isim girin..." type="text" id="name">        
+            </div>
+            <div class="btn">Hazır!</div>
+            <div class="alt"></div>
+        </div>
+
+        <div class="oyun">
+             <div class="ust">
+                <div class="ustkutu" id='puan'></div>
+                <div class="ustkutu">QrQuiz!</div>
+                <div class="ustkutu" id='zaman'></div>
+            </div>
+            
+            <div class="soru">SORU</div>
+            <div class="cevap" id="1">CEVAP1</div>
+            <div class="cevap" id="2">CEVAP2</div>
+            <div class="cevap" id="3">CEVAP3</div>
+            <div class="cevap" id="4">CEVAP4</div>   
+        </div> 
+
+        <div class="sonuc"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
