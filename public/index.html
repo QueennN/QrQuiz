@@ -46,7 +46,7 @@
             //----test---
             oyuncu.qr=getParam('qr')
             //---test---
-            change(1)//test için 1 normalde 0 olmalı
+            change(1)
             socket.emit('oyuncu_ekle',oyuncu.qr)
 
             $('.bk').click(()=>{//ready butonu
@@ -61,6 +61,7 @@
             socket.on('ready',(durum)=>{
                 time=60
                 if(durum=='basladi'){
+                    console.log('başladı')
                     change(2)
                     socket.emit ('soru',s_obj)
                    var terval= setInterval(() => {
@@ -74,7 +75,7 @@
                     }, 1000);
                 }
                 else{
-                    $('#buton').text='Game is started already'
+                    $('.btn').text='Bekle'
                 }
             })
             $(window).bind("beforeunload", function() { 
