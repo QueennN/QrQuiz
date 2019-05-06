@@ -159,12 +159,11 @@ io.sockets.on('connection',(socket)=>{
                     }else{
                         var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
                         if(kontrol==true){
-                            for(var x in games[o_qr].oyuncular){
-                                console.log('DENEME->'+games[o_qr].oyuncular[x].id)
-                                io.sockets.connected[games[o_qr].oyuncular[x].id].emit('ready','b')//her bir kullanıcı için   
-                                console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[x].id)
-                                  
+                            for(var u in games[o_qr].oyuncular){
+                                io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
+                                console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
                             }
+
                             socket.on('soru',(s_obj)=>{
                                 if(games[o_qr].basladimi){
                                     var o=games[o_qr].oyuncular[socket.id]//oyuncu
