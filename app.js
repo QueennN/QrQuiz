@@ -155,7 +155,7 @@ io.sockets.on('connection',(socket)=>{
                 
                 socket.on('ready',()=>{
                     if(games[o_qr].basladimi==true){
-                        io.sockets.connected[socket.id].emit('ready','Oyun zaten başladı')
+                        io.sockets.connected[socket.id].emit('ready','devam')
                     }else{
                         var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
                         if(kontrol==true){
@@ -244,6 +244,7 @@ app.get('/veri',(req,res)=>{
     res.write('Toplam oyuncu : '+ toplam_ziyaret+'\n')
     res.write('-------Oyun bilgileri-------\n')
     for(i in games){
+        res.write('Soru Sayısı->'+sorular.length+'\n')
         res.write('Oyun->'+i+'\n')
         res.write('Oyuncular->\n')
         for(j in games[i].oyuncular){
