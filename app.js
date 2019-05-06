@@ -240,11 +240,12 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/veri',(req,res)=>{
+    res.write('Soru Sayısı->'+sorular.length+'\n')
     res.write('Toplam Oyun : '+games.length+'\n')
     res.write('Toplam oyuncu : '+ toplam_ziyaret+'\n')
     res.write('-------Oyun bilgileri-------\n')
     for(i in games){
-        res.write('Soru Sayısı->'+sorular.length+'\n')
+        
         res.write('Oyun->'+i+'\n')
         res.write('Oyuncular->\n')
         for(j in games[i].oyuncular){
