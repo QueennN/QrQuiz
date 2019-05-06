@@ -141,9 +141,7 @@ var games=[]
 var st=[]//socketlere göre qr
 
 io.sockets.on('connection',(socket)=>{
-    console.log('baglandi')
     var o_qr=st[socket.id]
-     st[socket.id]=''
     socket.on('oyuncu_ekle',(qr)=>{
         toplam_ziyaret++
         o_qr=qr
@@ -152,9 +150,7 @@ io.sockets.on('connection',(socket)=>{
             games[o_qr].oyuncu_ekle('',socket.id)
             console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
             socket.on('isim_ekle',(name)=>{
-                console.log('İsim eklendi'+name)
-                
-                console.log(socket.id)
+                console.log(socket.id+' ismi-> '+name)
                 games[o_qr].isim_ekle(socket.id,name)
                 
                 socket.on('ready',()=>{
