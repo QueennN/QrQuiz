@@ -29,7 +29,7 @@
                         'qr':null
                     }
                     var s_obj={
-                        cvp:null,
+                        cvp:0,
                     }
                     var change=function(mode){//0 qr , 1 ready , 2 game , 3 sonuclar
                         var items=[]
@@ -65,7 +65,7 @@
                         if(durum=='basladi'){
                             change(2)
                             socket.emit ('soru',s_obj)
-                           var terval= setInterval(() => {
+                            var terval= setInterval(() => {
                                 if(time==0){
                                     clearInterval(terval)
                                 }
