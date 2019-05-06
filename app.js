@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json());
 var toplam_ziyaret=0// toplamda ziyaret eden oyuncuları verir.veri tabanında tutulmadıgı için sıfırlanabilir.
-var oyunsuresi=60
+var oyunsuresi=60 //saniye
 
 class Oyuncu{
     constructor(name,id){
@@ -107,20 +107,19 @@ class Game{
 
         //oyunculara bittiğini ve puanları bildir.
         
-            console.log('Bitti bilgisi gönderilecekler...')
-            for(var xx in this.oyuncular){
-           
-                console.log(this.oyuncular[xx].name+'->'+this.oyuncular[xx].puan)
-                this.oyuncular[xx].ready=false
-                console.log(this.oyuncular[xx].id)
-                io.sockets.connected[this.oyuncular[xx].id].emit('bitti',rP)
-            }
-            //beklemesırasını oyuna dahil et
-            for(var xxx in this.beklemesirasi){
-                this.oyuncular[xxx]=this.beklemesirasi[xxx]
-                console.log(this.beklemesirasi[xxx]+'->'+this.oyuncular[xxx])
-            } 
-            this.beklemesirasi=[] 
+        console.log('Bitti bilgisi gönderilecekler...')
+        for(var xx in this.oyuncular){     
+            console.log(this.oyuncular[xx].name+'->'+this.oyuncular[xx].puan)
+            this.oyuncular[xx].ready=false
+            console.log(this.oyuncular[xx].id)
+            io.sockets.connected[this.oyuncular[xx].id].emit('bitti',rP)
+        }
+        //beklemesırasını oyuna dahil et
+        for(var xxx in this.beklemesirasi){
+            this.oyuncular[xxx]=this.beklemesirasi[xxx]
+            console.log(this.beklemesirasi[xxx]+'->'+this.oyuncular[xxx])
+        } 
+        this.beklemesirasi=[] 
         
         
     }
