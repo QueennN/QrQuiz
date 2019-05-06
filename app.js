@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json());
 var toplam_ziyaret=0// toplamda ziyaret eden oyuncuları verir.veri tabanında tutulmadıgı için sıfırlanabilir.
-var oyunsuresi=60 //saniye
+var oyunsuresi=5 //saniye
 
 class Oyuncu{
     constructor(name,id){
@@ -163,32 +163,7 @@ io.sockets.on('connection',(socket)=>{
                                 io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
                                 console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
                             }
-
-                            socket.on('soru',(cvp)=>{
-                                console.log(socket.id+' cevap alındı'+cvp)
-                                if(games[o_qr].basladimi){
-                                    var o=games[o_qr].oyuncular[socket.id]//oyuncu
-                                        if(sorular[o.index].cevap==cvp){
-                                            o.puan++
-                                        }
-                                        else{
-                                            o.puan--
-                                        }                                        
-                                    
-                                    var rnd=Math.floor(Math.random()*sorular.length)
-                                    var sObj={
-                                        soru:sorular[rnd].soru,
-                                        s0:sorular[rnd].s0,
-                                        s1:sorular[rnd].s1,
-                                        s2:sorular[rnd].s2,
-                                        s3:sorular[rnd].s3,
-                                        puan:games[o_qr].oyuncular[socket.id].puan,
-                                    }
-                                    games[o_qr].oyuncular[socket.id].index=rnd
-                                    io.sockets.connected[socket.id].emit('soru',sObj)
-                                    console.log('Soru yollandı-> '+socket.id)
-                                }
-                            })      
+                            
                         } 
                     }  
                 })
@@ -196,6 +171,39 @@ io.sockets.on('connection',(socket)=>{
         }
         
     })
+
+
+    socket.on('soru',(cvp)=>{
+        console.log(socket.id+' cevap alındı'+cvp)
+        if(games[o_qr].basladimi){
+            var o=games[o_qr].oyuncular[socket.id]//oyuncu
+                if(sorular[o.index].cevap==cvp){
+                    o.puan++
+                }
+                else{
+                    o.puan--
+                }                                        
+            
+            var rnd=Math.floor(Math.random()*sorular.length)
+            var sObj={
+                soru:sorular[rnd].soru,
+                s0:sorular[rnd].s0,
+                s1:sorular[rnd].s1,
+                s2:sorular[rnd].s2,
+                s3:sorular[rnd].s3,
+                puan:games[o_qr].oyuncular[socket.id].puan,
+            }
+            games[o_qr].oyuncular[socket.id].index=rnd
+            io.sockets.connected[socket.id].emit('soru',sObj)
+            console.log('Soru yollandı-> '+socket.id)
+        }
+    })      
+
+
+
+
+
+
     socket.on('disconnect',()=>{
         var rO=[]
         var rSt=[]
