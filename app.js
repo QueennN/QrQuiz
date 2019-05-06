@@ -19,7 +19,7 @@ class Oyuncu{
         this.puan=100
         this.name=name
         this.ready=false
-        this.index=-1
+        this.index=0
     }
 }
 
@@ -164,21 +164,18 @@ io.sockets.on('connection',(socket)=>{
                                 console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
                             }
 
-                            socket.on('soru',(s_obj)=>{
+                            socket.on('soru',(cvp)=>{
+                                console.log(socket.id+' cevap alındı'+cvp)
                                 if(games[o_qr].basladimi){
                                     var o=games[o_qr].oyuncular[socket.id]//oyuncu
-                                    if(o.index!=-1 ){
-                                        if(sorular[o.index].cevap==s_obj.cvp){
-                                            games[o_qr].oyuncular[socket.id].puan++
+                                        if(sorular[o.index].cevap==cvp){
+                                            o.puan++
                                         }
                                         else{
-                                            games[o_qr].oyuncular[socket.id].puan--
-                                        }
-                                        
-                                    }
-                                    else{
-                                    }
-                                    var rnd=Math.floor(Math.random()*(sorular.length))
+                                            o.puan--
+                                        }                                        
+                                    
+                                    var rnd=Math.floor(Math.random()*sorular.length)
                                     var sObj={
                                         soru:sorular[rnd].soru,
                                         s0:sorular[rnd].s0,
@@ -189,6 +186,7 @@ io.sockets.on('connection',(socket)=>{
                                     }
                                     games[o_qr].oyuncular[socket.id].index=rnd
                                     io.sockets.connected[socket.id].emit('soru',sObj)
+                                    console.log('Soru yollandı-> '+socket.id)
                                 }
                             })      
                         } 

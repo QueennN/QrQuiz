@@ -28,9 +28,9 @@
                         'name':null,
                         'qr':null
                     }
-                    var s_obj={
-                        cvp:0,
-                    }
+                    
+                    var cvp=1;
+                    
                     var change=function(mode){//0 qr , 1 ready , 2 game , 3 sonuclar
                         var items=[]
                         items.push($('.qr'))
@@ -63,9 +63,10 @@
                     socket.on('ready',(durum)=>{
                         time=60
                         if(durum=='b'){
-                            $('.btn').css('background-color','rgba(66, 189, 255, 1)')
+                            socket.emit ('soru',cvp)
                             change(2)
-                            socket.emit ('soru',s_obj)
+                            $('.btn').css('background-color','rgba(66, 189, 255, 1)')    
+                            
                             var terval= setInterval(() => {
                                 if(time==0){
                                     clearInterval(terval)
@@ -84,6 +85,7 @@
                         socket.emit('disconnect')
                     });
                     socket.on('soru',(soru)=>{
+                        console.log(soru)
                         $('.soru').text(soru.soru)
                         $('#1').text(soru.s0)
                         $('#2').text(soru.s1)
@@ -94,26 +96,24 @@
                     
         
                     $('#1').click(()=>{
-                        s_obj.cvp=0
-                        socket.emit('soru',s_obj)
+                        cvp=0
+                        socket.emit('soru',cvp)
                     })
                     $('#2').click(()=>{ 
-                        s_obj.cvp=1
-                        socket.emit('soru',s_obj)
+                        cvp=1
+                        socket.emit('soru',cvp)
                     })
                     $('#3').click(()=>{    
-                        s_obj.cvp=2         
-                        socket.emit('soru',s_obj)
+                        cvp=2         
+                        socket.emit('soru',cvp)
                     })
                     $('#4').click(()=>{
-                        s_obj.cvp=3
-                        socket.emit('soru',s_obj)
+                        cvp=3
+                        socket.emit('soru',cvp)
                     })
         
                     socket.on('bitti',(oyuncular)=>{
                         $('.sonuc .sonuckutu').remove()
-                        $('.sonuc .numara').remove()
-                        
                         $('.sonuc').append('<div style="color:white; background-color:rgba(66, 189, 255, 1); width:50%; float:left;" class="sonuckutu">İsimler</div> <div style="color:white; background-color:rgba(66, 189, 255, 1); float:left; width:50%;" class="sonuckutu">Paunlar</div>')
                         
                         console.log(oyuncular)
