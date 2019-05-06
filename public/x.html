@@ -63,6 +63,7 @@
                     socket.on('ready',(durum)=>{
                         time=60
                         if(durum=='basladi'){
+                            $('.btn').css('background-color','rgba(66, 189, 255, 1)')
                             change(2)
                             socket.emit ('soru',s_obj)
                             var terval= setInterval(() => {
