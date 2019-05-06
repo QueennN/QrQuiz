@@ -56,7 +56,7 @@
                             oyuncu.name=$('.isim').val()
                             socket.emit('isim_ekle',oyuncu.name)
                             socket.emit('ready')
-                            $('#buton').text='Waiting for others'
+                            $('.btn').css('background-color','darkgreen')
                         }
                     })
         
