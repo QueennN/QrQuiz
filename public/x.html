@@ -86,7 +86,6 @@
                         socket.emit('disconnect')
                     });
                     socket.on('soru',(soru)=>{
-                        console.log(soru)
                         $('.soru').text(soru.soru)
                         $('#1').text(soru.s0)
                         $('#2').text(soru.s1)
