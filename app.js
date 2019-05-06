@@ -161,7 +161,7 @@ io.sockets.on('connection',(socket)=>{
                         if(kontrol==true){
                             for(var x in games[o_qr].oyuncular){
                                 console.log('DENEME->'+games[o_qr].oyuncular[x].id)
-                                io.sockets.connected[games[o_qr].oyuncular[x].id].emit('ready','basladi')//her bir kullanıcı için   
+                                io.sockets.connected[games[o_qr].oyuncular[x].id].emit('ready','b')//her bir kullanıcı için   
                                 console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[x].id)
                                   
                             }

@@ -61,8 +61,9 @@
                     })
         
                     socket.on('ready',(durum)=>{
+                        console.log(durum)
                         time=60
-                        if(durum=='basladi'){
+                        if(durum=='b'){
                             $('.btn').css('background-color','rgba(66, 189, 255, 1)')
                             change(2)
                             socket.emit ('soru',s_obj)
