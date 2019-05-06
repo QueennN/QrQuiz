@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json());
 var toplam_ziyaret=0// toplamda ziyaret eden oyuncuları verir.veri tabanında tutulmadıgı için sıfırlanabilir.
-var oyunsuresi=5 //saniye
+var oyunsuresi=60 //saniye
 
 class Oyuncu{
     constructor(name,id){
