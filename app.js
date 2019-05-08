@@ -37,7 +37,7 @@ class Game{
 
 
     oyuncu_ekle(name,id){ 
-        if(this.basladimi==false){
+        if(!this.basladimi){
             this.oyuncular[id]=new Oyuncu(name,id)
             this.oyuncular[id].ekle_oyun=true
             console.log('oyuncuid: ' + id+' oyuna eklendi')
@@ -55,7 +55,7 @@ class Game{
         }
     }
     ready(id){
-        if(this.basladimi==false & this.oyuncular[id].ready!=undefined){
+        if(!this.basladimi & this.oyuncular[id].ready!=undefined & this.oyuncular[id].ekle_isim & this.oyuncular[id].ekle_oyun){
             var oyunculr=this.oyuncular
                 oyunculr[id].ready=true
                 console.log(oyunculr[id].id+' hazır')
@@ -155,40 +155,32 @@ io.sockets.on('connection',(socket)=>{
         if(games[o_qr]){
             console.log('Qr bulundu')
             games[o_qr].oyuncu_ekle('',socket.id)
-            console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
-          
+            console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )  
         }       
     })
 
 
     socket.on('isim_ekle',(name)=>{
-        if(games[o_qr].basladimi==true & games[o_qr].oyuncular[socket.id] & games[o_qr].oyuncular[socket.id].ekle_oyun)
         console.log(socket.id+' ismi-> '+name)
         games[o_qr].isim_ekle(socket.id,name)  
     })
 
 
 
-    socket.on('ready',()=>{
-        if(games[o_qr].basladimi&!games[o_qr].oyuncular[socket.id].ekle_oyun & !games[o_qr].oyuncular[socket.id].ekle_isim){
-            io.sockets.connected[socket.id].emit('ready','devam')
-        }else{
+    socket.on('ready',()=>{    
             var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
-            if(kontrol==true){
+            if(kontrol){
                 for(var u in games[o_qr].oyuncular){
                     io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
                     console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
-                }
-                
-            } 
-        }  
+                }              
+            }       
     })
 
 
 
 
     socket.on('soru',(cvp)=>{
-        console.log(socket.id+' cevap alındı'+cvp)
         if(games[o_qr].basladimi){
             var o=games[o_qr].oyuncular[socket.id]//oyuncu
                 if(sorular[o.index].cevap==cvp){
@@ -209,7 +201,6 @@ io.sockets.on('connection',(socket)=>{
             }
             games[o_qr].oyuncular[socket.id].index=rnd
             io.sockets.connected[socket.id].emit('soru',sObj)
-            console.log('Soru yollandı-> '+socket.id)
         }
     })      
 
