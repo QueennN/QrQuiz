@@ -1,7 +1,10 @@
 var express= require('express')
 var app =express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http,{
+    pingInterval: 20*1000,
+  pingTimeout: 20*1000,
+});
 var fs=require('fs')
 var bodyParser = require('body-parser')
 var sorular=require('./sorular')
@@ -15,6 +18,8 @@ var oyunsuresi=60 //saniye
 
 class Oyuncu{
     constructor(name,id){
+        this.ekle_oyun=false
+        this.isim_ekle=false
         this.id=id
         this.puan=100
         this.name=name
@@ -34,6 +39,7 @@ class Game{
     oyuncu_ekle(name,id){ 
         if(this.basladimi==false){
             this.oyuncular[id]=new Oyuncu(name,id)
+            this.oyuncular[id].ekle_oyun=true
             console.log('oyuncuid: ' + id+' oyuna eklendi')
         }
         else{
@@ -43,8 +49,9 @@ class Game{
     }
     isim_ekle(id,isim){
         console.log('isim ekle')
-        if(this.basladimi==false){
+        if(this.basladimi==false & this.oyuncular[id].ekle_oyun){
             this.oyuncular[id].name=isim
+            this.oyuncular[id].ekle_isim=true
         }
     }
     ready(id){
@@ -126,7 +133,7 @@ class Game{
 }
 
 
-//--------App
+//--------App--------
 var games=[]
  games['0']=new Game()
  games['1']=new Game()
@@ -149,28 +156,35 @@ io.sockets.on('connection',(socket)=>{
             console.log('Qr bulundu')
             games[o_qr].oyuncu_ekle('',socket.id)
             console.log('oyuncu eklendi : '+socket.id+' qr: '+o_qr )
-            socket.on('isim_ekle',(name)=>{
-                console.log(socket.id+' ismi-> '+name)
-                games[o_qr].isim_ekle(socket.id,name)
-                
-                socket.on('ready',()=>{
-                    if(games[o_qr].basladimi==true){
-                        io.sockets.connected[socket.id].emit('ready','devam')
-                    }else{
-                        var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
-                        if(kontrol==true){
-                            for(var u in games[o_qr].oyuncular){
-                                io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
-                                console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
-                            }
-                            
-                        } 
-                    }  
-                })
-            })
-        }
-        
+          
+        }       
     })
+
+
+    socket.on('isim_ekle',(name)=>{
+        if(games[o_qr].basladimi==true & games[o_qr].oyuncular[socket.id] & games[o_qr].oyuncular[socket.id].ekle_oyun)
+        console.log(socket.id+' ismi-> '+name)
+        games[o_qr].isim_ekle(socket.id,name)  
+    })
+
+
+
+    socket.on('ready',()=>{
+        if(games[o_qr].basladimi&!games[o_qr].oyuncular[socket.id].ekle_oyun & !games[o_qr].oyuncular[socket.id].ekle_isim){
+            io.sockets.connected[socket.id].emit('ready','devam')
+        }else{
+            var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
+            if(kontrol==true){
+                for(var u in games[o_qr].oyuncular){
+                    io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
+                    console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
+                }
+                
+            } 
+        }  
+    })
+
+
 
 
     socket.on('soru',(cvp)=>{
@@ -246,7 +260,7 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/veri',(req,res)=>{
-    res.write('Soru Sayısı->'+sorular.length+'\n')
+    res.write('Soru Sayisi->'+sorular.length+'\n')
     res.write('Toplam Oyun : '+games.length+'\n')
     res.write('Toplam oyuncu : '+ toplam_ziyaret+'\n')
     res.write('-------Oyun bilgileri-------\n')
