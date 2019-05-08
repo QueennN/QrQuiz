@@ -45,47 +45,62 @@ class Game{
         else{
             this.beklemesirasi[id]=new Oyuncu(name,id)
             console.log('oyuncuid: ' + id+' bekleme sırasında"')
+            this.beklemesirasi[id].ekle_oyun=true
         }          
     }
+
     isim_ekle(id,isim){
         console.log('isim ekle')
-        if(this.basladimi==false & this.oyuncular[id].ekle_oyun){
-            this.oyuncular[id].name=isim
-            this.oyuncular[id].ekle_isim=true
-        }
-    }
-    ready(id){
-        if(!this.basladimi & this.oyuncular[id].ready!=undefined & this.oyuncular[id].ekle_isim & this.oyuncular[id].ekle_oyun){
-            var oyunculr=this.oyuncular
-                oyunculr[id].ready=true
-                console.log(oyunculr[id].id+' hazır')
-                var flag
-                flag=0
-               
-                for(var x in oyunculr){
-                    if(oyunculr[x].ready==false & this.oyuncular[id].ready!=undefined){
-                        flag++
-                        break
-                    }
-                }
-
-                if(flag==0){
-                    console.log('herkes tamam')
-                    for(var i in oyunculr){
-                        console.log('Bağlılar->'+oyunculr[i].id)
-                    }
-                    this.baslat()
-                    return true
-                }
-                else{
-                    return false
-                }
+        if(!this.basladimi){
+            if(this.oyuncular[id].ekle_oyun){
+                this.oyuncular[id].name=isim
+                this.oyuncular[id].ekle_isim=true
+            }
+            else{
+                console.log('Oyuna bağlanmış değilsiniz')
+            }
             
         }else{
-            console.log('ready veremezsin-> ' + id)
-            return false
+            console.log('Oyun zaten başlamış')
         }
-        
+    }
+
+    ready(id){
+        if(this.oyuncular[id]){
+            if(this.oyuncular[id].ekle_isim){
+                var oyunculr=this.oyuncular
+                    oyunculr[id].ready=true
+                    console.log(oyunculr[id].id+' hazır')
+                    var flag
+                    flag=0
+                
+                    for(var x in oyunculr){
+                        if(oyunculr[x].ready==false & this.oyuncular[id].ready!=undefined){
+                            flag++
+                            break
+                        }
+                    }
+
+                    if(flag==0){
+                        console.log('herkes tamam')
+                        for(var i in oyunculr){
+                            console.log('Bağlılar->'+oyunculr[i].id)
+                        }
+                        this.baslat()
+                        return true
+                    }
+                    else{
+                        return false
+                    }
+                
+            }else{
+                console.log('Daha isim eklemediniz-> ' + id)
+                return false
+            }
+        }
+        else{
+            console.log('bekleme sırasındasınız!')
+        }      
     }
 
     baslat(){
@@ -110,6 +125,7 @@ class Game{
                 'puan':this.oyuncular[x].puan,
             }) 
             this.oyuncular[x].puan=100
+            this.oyuncular[x].ekle_isim=false
         }
 
         //oyunculara bittiğini ve puanları bildir.
@@ -161,8 +177,11 @@ io.sockets.on('connection',(socket)=>{
 
 
     socket.on('isim_ekle',(name)=>{
-        console.log(socket.id+' ismi-> '+name)
-        games[o_qr].isim_ekle(socket.id,name)  
+        if(games[o_qr]){
+            console.log(socket.id+' ismi-> '+name)
+            games[o_qr].isim_ekle(socket.id,name)  
+        }
+       
     })
 
 
