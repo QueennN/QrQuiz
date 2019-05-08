@@ -2,8 +2,8 @@ var express= require('express')
 var app =express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http,{
-    pingInterval: 20*1000,
-  pingTimeout: 20*1000,
+    pingInterval: 10*1000,
+  pingTimeout: 9*1000,
 });
 var fs=require('fs')
 var bodyParser = require('body-parser')
@@ -229,26 +229,32 @@ io.sockets.on('connection',(socket)=>{
 
 
     socket.on('disconnect',()=>{
-        var rO=[]
-        var rSt=[]
+        var rO=[]//oyuncular
+        var rB=[]//bekleme
+        var rSt=[]//soket -qr 
         if(games[o_qr]){
             games[o_qr].oyuncular[socket.id]=undefined
-        st[socket.id]=undefined
-        console.log('qr->'+o_qr+' '+socket.id+' çıkış yaptı')
+            st[socket.id]=undefined
+            games[o_qr].beklemesirasi[socket.id]=undefined
+            console.log('qr->'+o_qr+' '+socket.id+' çıkış yaptı')
 
-        for(var y in games[o_qr].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
-            if(games[o_qr].oyuncular[y]!=undefined){
-                rO[y]=games[o_qr].oyuncular[y]
+            for(var y in games[o_qr].oyuncular){//undefined olanları yeni lisiteye almıyoruz.
+                if(games[o_qr].oyuncular[y]!=undefined){
+                    rO[y]=games[o_qr].oyuncular[y]
+                }
+                if(st[socket.id]!=undefined){
+                    rSt[y]=st[y]
+                }
+                if(games[o_qr].beklemesirasi[y]!=undefined){
+                    rB[y]=games[o_qr].beklemesirasi[y]
+                }
             }
-            if(st[socket.id]!=undefined){
-                rSt[y]=st[y]
+            console.log("geriye kalanlar->")
+            console.log(rO)
+            games[o_qr].oyuncular=rO//yeni listeyi ata     
+            st=rSt//yeni soketqr listesini ata
+            games[o_qr].beklemesirasi=rB//Bekleme sırasını ata
             }
-        }
-        console.log("geriye kalanlar->")
-        console.log(rO)
-        games[o_qr].oyuncular=rO//yeni listeyi ata     
-        st=rSt//yeni soketqr listesini ata
-        }
         else{
             console.log('Böyle bir socket yok')
         }
@@ -279,7 +285,7 @@ app.get('/veri',(req,res)=>{
         res.write('Oyun->'+i+'\n')
         res.write('Oyuncular->\n')
         for(j in games[i].oyuncular){
-            res.write(games[i].oyuncular[j].name+'\n')
+            res.write(games[i].oyuncular[j].id+'\n')
         }
     }
     res.end()
