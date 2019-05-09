@@ -186,14 +186,17 @@ io.sockets.on('connection',(socket)=>{
 
 
 
-    socket.on('ready',()=>{    
-            var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
+    socket.on('ready',()=>{
+            if(games[o_qr])  {
+                var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
             if(kontrol){
                 for(var u in games[o_qr].oyuncular){
                     io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
                     console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
                 }              
-            }       
+            }  
+            }  
+                 
     })
 
 
@@ -263,7 +266,7 @@ io.sockets.on('connection',(socket)=>{
 })
 
 app.get('/',(req,res)=>{
-    console.log("qr : "+req.query.qr + "\tip : " + req.ip)
+    console.log("qr : "+req.query.qr + "\t ip : " + req.ip)
     fs.readFile('./public/x.html',(err,data)=>{
         if(!err & req.query.qr!=undefined){
             res.writeHead(200)
