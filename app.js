@@ -230,7 +230,6 @@ io.sockets.on('connection',(socket)=>{
 
 
 
-
     socket.on('disconnect',()=>{
         var rO=[]//oyuncular
         var rB=[]//bekleme
@@ -279,7 +278,7 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/veri',(req,res)=>{
-    res.write('Soru Sayisi->'+sorular.length+50 +'\n')
+    res.write('Soru Sayisi->'+(sorular.length+50) +'\n')
     res.write('Toplam Oyun : '+games.length+'\n')
     res.write('Toplam oyuncu : '+ toplam_ziyaret+'\n')
     res.write('-------Oyun bilgileri-------\n')
