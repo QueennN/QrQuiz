@@ -52,7 +52,7 @@ class Game{
 
     isim_ekle(id,isim){
         console.log('isim ekle')
-        if(!this.basladimi & this.oyuncular[id].ekle_oyun){
+        if(!this.basladimi){
             if(this.oyuncular[id].ekle_oyun){
                 this.oyuncular[id].name=isim
                 this.oyuncular[id].ekle_isim=true
