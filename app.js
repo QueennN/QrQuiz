@@ -58,6 +58,8 @@ class Game{
             }
             else{
                 console.log('Oyuna bağlanmış değilsiniz')
+                this.beklemesirasi[id].name=isim
+                this.beklemeisim.ekle_isim=true
             }
             
         }else{
