@@ -35,7 +35,8 @@ class Game{
         this.basladimi=false
     }
 
-
+    
+    
     oyuncu_ekle(name,id){ 
         if(!this.basladimi){
             this.oyuncular[id]=new Oyuncu(name,id)
