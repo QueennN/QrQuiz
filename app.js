@@ -64,7 +64,7 @@ class Game{
             }
             
         }else{
-            console.log('Oyun zaten başlamış')
+            console.log('Oyun zadasdten başlamış')
         }
     }
 
