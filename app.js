@@ -49,7 +49,6 @@ class Game{
             this.beklemesirasi[id].ekle_oyun=true
         }          
     }
-console.log('')
     isim_ekle(id,isim){
         console.log('isim ekle')
         if(!this.basladimi){
