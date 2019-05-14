@@ -163,6 +163,16 @@ var games=[]
  games['7']=new Game()
  games['8']=new Game()
  games['9']=new Game()
+ games['10']=new Game()
+ games['11']=new Game()
+ games['12']=new Game()
+ games['13']=new Game()
+ games['14']=new Game()
+ games['15']=new Game()
+ games['16']=new Game()
+ games['17']=new Game()
+ games['18']=new Game()
+ games['19']=new Game()
 var st=[]//socketlere göre qr
 
 io.sockets.on('connection',(socket)=>{
@@ -191,13 +201,15 @@ io.sockets.on('connection',(socket)=>{
     socket.on('ready',()=>{
             if(games[o_qr])  {
                 var kontrol=games[o_qr].ready(socket.id)//true dönerse herkes hazır demek
-            if(kontrol){
-                for(var u in games[o_qr].oyuncular){
-                    io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
-                    console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
-                }              
-            }  
-            }  
+                if(kontrol){
+                    for(var u in games[o_qr].oyuncular){
+                        io.sockets.connected[games[o_qr].oyuncular[u].id].emit('ready','b')//her bir kullanıcı için   
+                        console.log('başladı bilgisi gönderildi-> '+games[o_qr].oyuncular[u].id)      
+                    }              
+                }  
+            }else{
+                console.log('ready qr bulanamadı.')
+            }
                  
     })
 
@@ -205,27 +217,29 @@ io.sockets.on('connection',(socket)=>{
 
 
     socket.on('soru',(cvp)=>{
-        if(games[o_qr].basladimi){
-            var o=games[o_qr].oyuncular[socket.id]//oyuncu
-                if(sorular[o.index].cevap==cvp){
-                    o.puan++
+        if(games[o_qr]){
+            if(games[o_qr].basladimi){
+                var o=games[o_qr].oyuncular[socket.id]//oyuncu
+                    if(sorular[o.index].cevap==cvp){
+                        o.puan++
+                    }
+                    else{
+                        o.puan--
+                    }                                        
+                
+                var rnd=Math.floor(Math.random()*sorular.length)
+                var sObj={
+                    soru:sorular[rnd].soru,
+                    s0:sorular[rnd].s0,
+                    s1:sorular[rnd].s1,
+                    s2:sorular[rnd].s2,
+                    s3:sorular[rnd].s3,
+                    puan:games[o_qr].oyuncular[socket.id].puan,
                 }
-                else{
-                    o.puan--
-                }                                        
-            
-            var rnd=Math.floor(Math.random()*sorular.length)
-            var sObj={
-                soru:sorular[rnd].soru,
-                s0:sorular[rnd].s0,
-                s1:sorular[rnd].s1,
-                s2:sorular[rnd].s2,
-                s3:sorular[rnd].s3,
-                puan:games[o_qr].oyuncular[socket.id].puan,
+                games[o_qr].oyuncular[socket.id].index=rnd
+                io.sockets.connected[socket.id].emit('soru',sObj)
             }
-            games[o_qr].oyuncular[socket.id].index=rnd
-            io.sockets.connected[socket.id].emit('soru',sObj)
-        }
+        }   
     })      
 
 
