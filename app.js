@@ -46,7 +46,7 @@ class Game{
         else{
             this.beklemesirasi[id]=new Oyuncu(name,id)
             console.log('oyuncuid: ' + id+' bekleme sırasında"')
-            this.beklemesirasi[id].ekle_oyun=true
+            this.beklemesirasi[id].ekle_oyun=false
         }          
     }
     isim_ekle(id,isim){
