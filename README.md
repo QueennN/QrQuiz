@@ -1,3 +1,3 @@
 QrQuiz
 
-There is to time to fix bugs!
+There is no time to fix bugs!
